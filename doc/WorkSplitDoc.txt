@@ -1,0 +1,16 @@
+Matthew Ya my235
+Tae Hee Lee tl373
+
+WORKSPLIT
+
+Matthew Ya:
+Admin Subsystem - design and backend
+Non-admin User Subsystem - Add/remove photo to album, display photo and photo information, copy/move photo.
+Search for photos
+Errors
+
+Taehee Lee:
+Login - design and backend
+Non-admin User Subsystem - Create, Delete, and Rename functionality. Caption/recaption photo, add/remove tags, photo slideshow.
+Logout - functionality
+Safe quit - functionality
