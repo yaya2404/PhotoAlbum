@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:controller="view.AdminController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="301.0" prefWidth="243.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ListView layoutX="22.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button fx:id="add" layoutX="22.0" layoutY="266.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Add" />
+      <Button fx:id="edit" layoutX="93.0" layoutY="266.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Edit" />
+      <Button fx:id="logout" layoutX="166.0" layoutY="266.0" mnemonicParsing="false" text="Logout" />
+      <TextField fx:id="userid" layoutX="20.0" layoutY="231.0" prefHeight="25.0" prefWidth="200.0" promptText="UserID" />
+   </children>
+</AnchorPane>
