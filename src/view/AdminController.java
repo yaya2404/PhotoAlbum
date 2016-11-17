@@ -33,8 +33,8 @@ public class AdminController{
 	@FXML ListView<String> listview;
 	@FXML ObservableList<String> users;
 	
-	private static final String dir = "admin";
-	private static final String file = "users";
+	static final String dir = "admin";
+	static final String file = "users";
 	
 	private Stage stage;
 	
@@ -46,7 +46,7 @@ public class AdminController{
 			users = FXCollections.observableArrayList((ArrayList<String>)ois.readObject());
 			ois.close();
 		}catch(Exception a){
-
+			System.out.println(a.getMessage());
 		}
 		listview.setItems(users);
 	}

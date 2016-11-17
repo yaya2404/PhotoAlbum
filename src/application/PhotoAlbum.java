@@ -25,17 +25,6 @@ public class PhotoAlbum extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-			/*Actual PhotoAlbum 
-			FXMLLoader loader = new FXMLLoader();   
-			loader.setLocation(getClass().getResource("/view/NonAdminUI.fxml"));
-			AnchorPane root = (AnchorPane)loader.load();
-			NonAdminController nonadminController = loader.getController();
-			
-			Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			*/
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

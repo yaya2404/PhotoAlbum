@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class NonAdminController {
 	@FXML Button create;
@@ -17,11 +18,12 @@ public class NonAdminController {
 	@FXML TextField tagvalue;
 	@FXML ListView listView;
 	
+	private Stage stage;
 	/**
 	 * Load albums from database
 	 */
-	public void start(){
-		
+	public void start(Stage stage){
+		this.stage = stage;
 	}
 	
 	public void cdro(){
