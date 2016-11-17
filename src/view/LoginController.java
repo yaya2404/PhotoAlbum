@@ -31,12 +31,11 @@ public class LoginController {
 		if(userid.compareToIgnoreCase("admin") == 0){
 			//user is admin load AdminUI
 	        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AdminUI.fxml"));
-	        
             Parent admin = (Parent) fxmlLoader.load();
             Scene adminpage = new Scene(admin);
             Stage currStage = (Stage) this.stage.getScene().getWindow();
             AdminController adminController = fxmlLoader.getController();
-            adminController.start()
+            adminController.start(this.stage);
             currStage.setScene(adminpage);
             currStage.show();
 		}else if(users.contains(userid)){

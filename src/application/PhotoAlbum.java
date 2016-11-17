@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import view.LoginController;
+import view.NonAdminController;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -13,12 +14,25 @@ public class PhotoAlbum extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			/*LOGIN CODE
 			FXMLLoader loader = new FXMLLoader();   
 			loader.setLocation(getClass().getResource("/view/LoginUI.fxml"));
 			AnchorPane root = (AnchorPane)loader.load();
 			LoginController loginController = loader.getController();
 			loginController.start(primaryStage);
 
+			Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+			*/
+			
+			//Actual PhotoAlbum 
+			FXMLLoader loader = new FXMLLoader();   
+			loader.setLocation(getClass().getResource("/view/NonAdminUI.fxml"));
+			AnchorPane root = (AnchorPane)loader.load();
+			NonAdminController nonadminController = loader.getController();
+			
 			Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

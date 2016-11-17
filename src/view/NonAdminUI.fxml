@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="296.0" prefWidth="440.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.NonAdminController">
+   <children>
+      <ListView fx:id="listView" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="208.0" />
+      <TextField fx:id="album" layoutX="12.0" layoutY="222.0" prefHeight="25.0" prefWidth="208.0" />
+      <Button fx:id="create" layoutX="14.0" layoutY="253.0" mnemonicParsing="false" onAction="#cdro" text="Create" />
+      <Button fx:id="delete" layoutX="65.0" layoutY="253.0" mnemonicParsing="false" onAction="#cdro" text="Delete" />
+      <Button fx:id="rename" layoutX="116.0" layoutY="253.0" mnemonicParsing="false" onAction="#cdro" text="Rename" />
+      <Button fx:id="open" layoutX="175.0" layoutY="253.0" mnemonicParsing="false" onAction="#cdro" text="Open" />
+      <Button fx:id="logout" layoutX="299.0" layoutY="250.0" mnemonicParsing="false" onAction="#cdro" prefHeight="25.0" prefWidth="93.0" text="Logout" />
+      <DatePicker layoutX="255.0" layoutY="31.0" prefHeight="25.0" prefWidth="174.0" />
+      <DatePicker layoutX="256.0" layoutY="72.0" prefHeight="25.0" prefWidth="174.0" />
+      <TextField fx:id="tagtype" layoutX="256.0" layoutY="114.0" prefHeight="25.0" prefWidth="174.0" promptText="Tag Type" />
+      <TextField fx:id="tagvalue" layoutX="258.0" layoutY="155.0" prefHeight="25.0" prefWidth="174.0" promptText="Tag Value" />
+      <Text layoutX="254.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date:" />
+      <Text layoutX="256.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End Date:" />
+      <Button fx:id="search" layoutX="258.0" layoutY="189.0" mnemonicParsing="false" onAction="#cdro" prefHeight="25.0" prefWidth="174.0" text="Search" />
+   </children>
+</AnchorPane>
