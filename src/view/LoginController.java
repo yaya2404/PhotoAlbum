@@ -17,6 +17,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import utility.SerializeData;
+import utility.User;
 
 public class LoginController {
 	
@@ -27,51 +29,62 @@ public class LoginController {
 	 * Loads existing users from file into a string array
 	 *
 	 */
-	private ArrayList<String> users;
+	private ArrayList<User> users;
 	
 	public void start(Stage mainstage){
 		try{
 			//obtains permitted users from admin folder
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(AdminController.dir + File.separator + AdminController.file));
-			users = (ArrayList<String>)ois.readObject();
-			
-			//obtains
-			ois.close();
+			users = new ArrayList<User>(SerializeData.getData());
 		}catch(Exception a){
-			System.out.println(a.getMessage());
+			//a.printStackTrace();
 		}
 		this.stage = mainstage;
 	}
-	public void login() throws IOException{
+	public void login(){
 		String userid = userinput.getText().trim();
-		if(userid.compareToIgnoreCase("admin") == 0){
-			//user is admin load AdminUI
-	        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AdminUI.fxml"));
-            Parent admin = (Parent) fxmlLoader.load();
-            Scene adminpage = new Scene(admin);
-            Stage currStage = (Stage) this.stage.getScene().getWindow();
-            AdminController adminController = fxmlLoader.getController();
-            adminController.start(this.stage);
-            currStage.setScene(adminpage);
-            currStage.show();
-		}else if(users.contains(userid)){
-			//user is in list. Load corresponding photoalbumUI to user
-	        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/NonAdminUI.fxml"));
-            Parent admin = (Parent) fxmlLoader.load();
-            Scene adminpage = new Scene(admin);
-            Stage currStage = (Stage) this.stage.getScene().getWindow();
-            NonAdminController nonadminController = fxmlLoader.getController();
-            nonadminController.start(this.stage);
-            currStage.setScene(adminpage);
-            currStage.show();
-		}else{
-			//user does not exist in list of users
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Login");
-			alert.setHeaderText("ERROR!");
-			alert.setContentText("Invalid User");
-			alert.showAndWait();
+		int index = -1;
+		try{
+			if(userid.compareToIgnoreCase("admin") == 0){
+				//user is admin load AdminUI
+		        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AdminUI.fxml"));
+	            Parent admin = (Parent) fxmlLoader.load();
+	            Scene adminpage = new Scene(admin);
+	            Stage currStage = (Stage) this.stage.getScene().getWindow();
+	            AdminController adminController = fxmlLoader.getController();
+	            adminController.start(this.stage);
+	            currStage.setScene(adminpage);
+	            currStage.show();
+			}else if((index = getUser(userid)) > -1){
+				//user is in list. Load corresponding photoalbumUI to user
+				User user = users.get(index);
+		        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/NonAdminUI.fxml"));
+	            Parent admin = (Parent) fxmlLoader.load();
+	            Scene adminpage = new Scene(admin);
+	            Stage currStage = (Stage) this.stage.getScene().getWindow();
+	            NonAdminController nonadminController = fxmlLoader.getController();
+	            nonadminController.start(this.stage, user);
+	            currStage.setScene(adminpage);
+	            currStage.show();
+			}else{
+				//user does not exist in list of users
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Login");
+				alert.setHeaderText("ERROR!");
+				alert.setContentText("Invalid User");
+				alert.showAndWait();
+			}
+		}catch(IOException h){
+			h.printStackTrace();
 		}
+	}
+	private int getUser(String name){
+		for(int i = 0; i < users.size(); i++){
+			if(users.get(i).toString().compareToIgnoreCase(name) == 0){
+				return i;
+			}
+		}
+		
+		return -1;
 	}
 
 }

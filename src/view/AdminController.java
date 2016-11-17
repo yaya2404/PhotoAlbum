@@ -6,10 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,6 +20,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import utility.SerializeData;
+import utility.User;
 
 public class AdminController{
 	
@@ -30,8 +29,8 @@ public class AdminController{
 	@FXML Button delete;
 	@FXML Button logout;
 	@FXML TextField userid;
-	@FXML ListView<String> listview;
-	@FXML ObservableList<String> users;
+	@FXML ListView<User> listview;
+	private ObservableList<User> users;
 	
 	static final String dir = "admin";
 	static final String file = "users";
@@ -40,14 +39,9 @@ public class AdminController{
 	
 	public void start(Stage mainstage){
 		this.stage = mainstage;
-		users = FXCollections.observableArrayList();
-		try{
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dir + File.separator + file));
-			users = FXCollections.observableArrayList((ArrayList<String>)ois.readObject());
-			ois.close();
-		}catch(Exception a){
-			System.out.println(a.getMessage());
-		}
+		
+		users = SerializeData.getData();
+		
 		listview.setItems(users);
 	}
 	public void ael(ActionEvent e){
@@ -66,13 +60,19 @@ public class AdminController{
 					alert.setHeaderText("ERROR!");
 					alert.setContentText("Admin should not be added to list of users");
 					alert.showAndWait();
+				}else if(containUser(userid.getText().trim())){
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Admin");
+					alert.setHeaderText("ERROR!");
+					alert.setContentText("Duplicate user");
+					alert.showAndWait();
 				}else{
-					users.add(userid.getText().trim());
+					User user = new User(userid.getText().trim());
+					users.add(user);
 					userid.clear();
 				}
 			}else if(b == delete){
-				String item = listview.getSelectionModel().getSelectedItem();
-				int index = users.indexOf(item);
+
 				if(users.size() == 0){
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Admin");
@@ -86,6 +86,8 @@ public class AdminController{
 					alert.setContentText("No item selected.");
 					alert.showAndWait();
 				}else{
+					User item = listview.getSelectionModel().getSelectedItem();
+					int index = users.indexOf(item);
 					users.remove(item);
 					if(users.size() != 0){
 						if(index+1 > users.size()){
@@ -98,9 +100,7 @@ public class AdminController{
 					}
 				}
 			}else if(b == logout){
-				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(dir + File.separator + file));
-				oos.writeObject(new ArrayList<String>(users));
-				oos.close();
+				SerializeData.writeData();
 				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/LoginUI.fxml"));
 				Parent admin = (Parent) fxmlLoader.load();
 				Scene adminpage = new Scene(admin);
@@ -110,11 +110,18 @@ public class AdminController{
 				currStage.setScene(adminpage);
 				currStage.show();
 			}
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(dir + File.separator + file));
-			oos.writeObject(new ArrayList<String>(users));
-			oos.close();
+			SerializeData.writeData();
 		}catch(IOException z){
 			z.printStackTrace();
 		}
+	}
+	private boolean containUser(String name){
+		for(int i = 0; i < users.size(); i++){
+			if(users.get(i).toString().compareToIgnoreCase(name) == 0){
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

@@ -3,6 +3,7 @@ package application;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import utility.SerializeData;
 import view.LoginController;
 import view.NonAdminController;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ public class PhotoAlbum extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			SerializeData.initData();
 			FXMLLoader loader = new FXMLLoader();   
 			loader.setLocation(getClass().getResource("/view/LoginUI.fxml"));
 			AnchorPane root = (AnchorPane)loader.load();
