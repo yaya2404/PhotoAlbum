@@ -1,15 +1,24 @@
 package view;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import utility.PhotoAlbum;
+import utility.SerializeData;
 import utility.User;
 
 public class NonAdminController {
@@ -36,15 +45,96 @@ public class NonAdminController {
 	public void start(Stage stage, User user){
 		this.stage = stage;
 		this.user = user;
-		albums = FXCollections.observableArrayList(user.getAlbums());
+		albums = FXCollections.observableArrayList(this.user.getAlbums());
 		listView.setItems(albums);
 	}
 	
 	public void cdr(ActionEvent e){
-		
+		Button a = (Button) e.getSource();
+		if(a == create){
+			if(album.getText().isEmpty()){
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("User");
+				alert.setHeaderText("ERROR!");
+				alert.setContentText("Album name field is empty");
+				alert.showAndWait();
+			}else if(this.user.getAlbum((album.getText().trim())) != null){
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("User");
+				alert.setHeaderText("ERROR!");
+				alert.setContentText("Duplicate Album");
+				alert.showAndWait();
+			}else{
+				albums.add(new PhotoAlbum(album.getText().trim()));
+				album.clear();
+			}
+		}else if(a == rename){
+			if(listView.getSelectionModel().getSelectedIndex() == -1){
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("User");
+				alert.setHeaderText("ERROR!");
+				alert.setContentText("No item selected.");
+				alert.showAndWait();
+			}else if(album.getText().isEmpty()){
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("User");
+				alert.setHeaderText("ERROR!");
+				alert.setContentText("Album name field is empty");
+				alert.showAndWait();
+			}else if(this.user.getAlbum((album.getText().trim())) != null){
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("User");
+				alert.setHeaderText("ERROR!");
+				alert.setContentText("Duplicate Album");
+				alert.showAndWait();
+			}else{
+				PhotoAlbum item = listView.getSelectionModel().getSelectedItem();
+				item.setName(album.getText().trim());
+				album.clear();
+			}
+		}else if(a == delete){
+			if(albums.size() == 0){
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("User");
+				alert.setHeaderText("ERROR!");
+				alert.setContentText("Cannot delete from an empty list");
+				alert.showAndWait();
+			}else if(listView.getSelectionModel().getSelectedIndex() == -1){
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("User");
+				alert.setHeaderText("ERROR!");
+				alert.setContentText("No item selected.");
+				alert.showAndWait();
+			}else{
+				PhotoAlbum item = listView.getSelectionModel().getSelectedItem();
+				int index = albums.indexOf(item);
+				albums.remove(item);
+				if(albums.size() != 0){
+					if(index+1 > albums.size()){
+						listView.getSelectionModel().selectPrevious();
+					}else{
+						listView.getSelectionModel().selectNext();
+					}
+				}else{
+					listView.getSelectionModel().clearSelection();
+				}
+			}
+		}
+		SerializeData.writeData();
 	}
 	public void logout(){
-		
+		try{
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/LoginUI.fxml"));
+			Parent admin = (Parent) fxmlLoader.load();
+			Scene adminpage = new Scene(admin);
+			Stage currStage = (Stage) this.stage.getScene().getWindow();
+			LoginController loginController = fxmlLoader.getController();
+			loginController.start(this.stage);
+			currStage.setScene(adminpage);
+			currStage.show();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	public void open(){
 		

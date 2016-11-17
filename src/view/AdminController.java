@@ -67,8 +67,7 @@ public class AdminController{
 					alert.setContentText("Duplicate user");
 					alert.showAndWait();
 				}else{
-					User user = new User(userid.getText().trim());
-					users.add(user);
+					users.add(new User(userid.getText().trim()));
 					userid.clear();
 				}
 			}else if(b == delete){
