@@ -14,7 +14,6 @@ public class PhotoAlbum extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			/*LOGIN CODE
 			FXMLLoader loader = new FXMLLoader();   
 			loader.setLocation(getClass().getResource("/view/LoginUI.fxml"));
 			AnchorPane root = (AnchorPane)loader.load();
@@ -25,9 +24,8 @@ public class PhotoAlbum extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			*/
 			
-			//Actual PhotoAlbum 
+			/*Actual PhotoAlbum 
 			FXMLLoader loader = new FXMLLoader();   
 			loader.setLocation(getClass().getResource("/view/NonAdminUI.fxml"));
 			AnchorPane root = (AnchorPane)loader.load();
@@ -37,6 +35,7 @@ public class PhotoAlbum extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			*/
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

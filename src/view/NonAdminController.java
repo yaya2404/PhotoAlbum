@@ -17,6 +17,13 @@ public class NonAdminController {
 	@FXML private TextField tagvalue;
 	@FXML private ListView listView;
 	
+	/**
+	 * Load albums from database
+	 */
+	public void start(){
+		
+	}
+	
 	public void cdro(){
 		
 	}
