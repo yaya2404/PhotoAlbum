@@ -31,8 +31,11 @@ public class LoginController {
 	
 	public void start(Stage mainstage){
 		try{
+			//obtains permitted users from admin folder
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(AdminController.dir + File.separator + AdminController.file));
 			users = (ArrayList<String>)ois.readObject();
+			
+			//obtains
 			ois.close();
 		}catch(Exception a){
 			System.out.println(a.getMessage());
