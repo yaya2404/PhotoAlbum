@@ -15,8 +15,8 @@ import javafx.stage.Stage;
 
 public class LoginController {
 	
-	@FXML private Button enter;
-	@FXML private TextField userinput;
+	@FXML Button enter;
+	@FXML TextField userinput;
 	private Stage stage;
 	/**
 	 * Loads existing users from file into a string array

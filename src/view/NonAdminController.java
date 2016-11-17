@@ -6,16 +6,16 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 public class NonAdminController {
-	@FXML private Button create;
-	@FXML private Button delete;
-	@FXML private Button rename;
-	@FXML private Button open;
-	@FXML private Button search;
-	@FXML private Button logout;
-	@FXML private TextField album;
-	@FXML private TextField tagtype;
-	@FXML private TextField tagvalue;
-	@FXML private ListView listView;
+	@FXML Button create;
+	@FXML Button delete;
+	@FXML Button rename;
+	@FXML Button open;
+	@FXML Button search;
+	@FXML Button logout;
+	@FXML TextField album;
+	@FXML TextField tagtype;
+	@FXML TextField tagvalue;
+	@FXML ListView listView;
 	
 	/**
 	 * Load albums from database
