@@ -31,6 +31,7 @@ public class AdminController{
 	@FXML TextField userid;
 	@FXML ListView<User> listview;
 	private ObservableList<User> users;
+	private ArrayList<User> hardusers;
 	
 	static final String dir = "admin";
 	static final String file = "users";
@@ -40,7 +41,8 @@ public class AdminController{
 	public void start(Stage mainstage){
 		this.stage = mainstage;
 		
-		users = SerializeData.getData();
+		hardusers = SerializeData.getData();
+		users = FXCollections.observableArrayList(hardusers);
 		
 		listview.setItems(users);
 	}
@@ -68,6 +70,7 @@ public class AdminController{
 					alert.showAndWait();
 				}else{
 					users.add(new User(userid.getText().trim()));
+					hardusers.add(new User(userid.getText().trim()));
 					userid.clear();
 				}
 			}else if(b == delete){
@@ -88,6 +91,7 @@ public class AdminController{
 					User item = listview.getSelectionModel().getSelectedItem();
 					int index = users.indexOf(item);
 					users.remove(item);
+					hardusers.remove(item);
 					if(users.size() != 0){
 						if(index+1 > users.size()){
 							listview.getSelectionModel().selectPrevious();

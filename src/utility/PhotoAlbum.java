@@ -24,4 +24,7 @@ public class PhotoAlbum implements Serializable{
 	public void setName(String name){
 		this.name = name;
 	}
+	public String getInfo(){
+		return "Name: " + this.name + "\n" + "Number of Photos: " + photos.size() + "\n" + "Earliest Photo: test\n" + "Latest Photo: test"; 
+	}
 }

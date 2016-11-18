@@ -2,26 +2,27 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="390.0" fitWidth="320.0" layoutX="30.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="210.0" layoutY="464.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="&gt;&gt;" />
-      <Button layoutX="76.0" layoutY="464.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="&lt;&lt;" />
-      <TextField layoutX="396.0" layoutY="44.0" prefHeight="90.0" prefWidth="240.0" />
-      <ListView layoutX="686.0" layoutY="30.0" prefHeight="390.0" prefWidth="320.0" />
-      <TextField layoutX="370.0" layoutY="191.0" prefHeight="25.0" prefWidth="128.0" />
-      <TextField layoutX="529.0" layoutY="191.0" prefHeight="25.0" prefWidth="128.0" />
-      <Button layoutX="390.0" layoutY="235.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" text="Tag" />
-      <Button layoutX="555.0" layoutY="235.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" text="Remove" />
-      <TextField layoutX="395.0" layoutY="300.0" prefHeight="25.0" prefWidth="240.0" />
-      <Button layoutX="456.0" layoutY="346.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Caption" />
-      <Button layoutX="915.0" layoutY="439.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Move" />
-      <Button layoutX="755.0" layoutY="439.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Delete" />
-      <Button layoutX="830.0" layoutY="439.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Copy" />
-      <Button layoutX="680.0" layoutY="439.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Add" />
+      <Button fx:id="next" layoutX="209.0" layoutY="439.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="&gt;&gt;" />
+      <Button fx:id="previous" layoutX="75.0" layoutY="439.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="&lt;&lt;" />
+      <ListView fx:id="listPhotoView" layoutX="686.0" layoutY="30.0" prefHeight="390.0" prefWidth="320.0" />
+      <TextField layoutX="370.0" layoutY="191.0" prefHeight="25.0" prefWidth="128.0" promptText="Tag Name" />
+      <TextField layoutX="529.0" layoutY="191.0" prefHeight="25.0" prefWidth="128.0" promptText="Tag Value" />
+      <Button layoutX="395.0" layoutY="248.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" text="Tag" />
+      <Button layoutX="555.0" layoutY="248.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" text="Remove" />
+      <TextField layoutX="395.0" layoutY="300.0" prefHeight="25.0" prefWidth="240.0" promptText="Caption Text" />
+      <Button layoutX="456.0" layoutY="346.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Write" />
+      <Button fx:id="move" layoutX="915.0" layoutY="439.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Move" />
+      <Button fx:id="delete" layoutX="755.0" layoutY="439.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Delete" />
+      <Button fx:id="copy" layoutX="830.0" layoutY="439.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Copy" />
+      <Button fx:id="add" layoutX="680.0" layoutY="439.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Add" />
+      <TextArea layoutX="415.0" layoutY="30.0" prefHeight="134.0" prefWidth="200.0" promptText="Photo Details" />
    </children>
 </AnchorPane>

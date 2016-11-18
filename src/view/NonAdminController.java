@@ -2,6 +2,7 @@ package view;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -33,8 +35,11 @@ public class NonAdminController {
 	@FXML TextField tagvalue;
 	@FXML ListView<PhotoAlbum> listView;
 	@FXML TextArea albuminfo;
+	@FXML DatePicker startdate;
+	@FXML DatePicker enddate;
 	
 	private ObservableList<PhotoAlbum> albums;
+	private ArrayList<PhotoAlbum> hardalbums;
 	
 	private User user;
 	
@@ -45,10 +50,22 @@ public class NonAdminController {
 	public void start(Stage stage, User user){
 		this.stage = stage;
 		this.user = user;
-		albums = FXCollections.observableArrayList(this.user.getAlbums());
-		listView.setItems(albums);
+		this.hardalbums = this.user.getAlbums();
+		this.albums = FXCollections.observableArrayList(this.hardalbums);
+		listView.setItems(this.albums);
+		listView
+		.getSelectionModel()
+		.selectedItemProperty()
+		.addListener(
+				(obs, oldVal, newVal) -> 
+				showItem()); 
 	}
 	
+	private void showItem() {
+		// TODO Auto-generated method stub
+		albuminfo.setText(listView.getSelectionModel().getSelectedItem().getInfo());
+	}
+
 	public void cdr(ActionEvent e){
 		Button a = (Button) e.getSource();
 		String name;
@@ -66,12 +83,12 @@ public class NonAdminController {
 				alert.setContentText("Duplicate Album");
 				alert.showAndWait();
 			}else{
-				
-				//must 
-				name = album.getText().trim();
-				albums.add(new PhotoAlbum(name));
-				this.user.addAlbum(new PhotoAlbum(name));
-				album.clear();
+				name = this.album.getText().trim();
+				PhotoAlbum test = new PhotoAlbum(name);
+				this.albums.add(test);
+				this.hardalbums.add(test);
+				listView.getSelectionModel().select(test);
+				this.album.clear();
 			}
 		}else if(a == rename){
 			if(listView.getSelectionModel().getSelectedIndex() == -1){
@@ -98,6 +115,8 @@ public class NonAdminController {
 				PhotoAlbum old = this.user.getAlbum(item.toString());
 				old.setName(name);
 				item.setName(name);
+				listView.refresh();
+				albuminfo.setText(item.getInfo());
 				album.clear();
 			}
 		}else if(a == delete){
@@ -117,6 +136,7 @@ public class NonAdminController {
 				PhotoAlbum item = listView.getSelectionModel().getSelectedItem();
 				int index = albums.indexOf(item);
 				albums.remove(item);
+				this.user.getAlbums().remove(item);
 				if(albums.size() != 0){
 					if(index+1 > albums.size()){
 						listView.getSelectionModel().selectPrevious();

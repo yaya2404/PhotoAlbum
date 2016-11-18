@@ -18,32 +18,31 @@ public class SerializeData {
 	
 	static final String dir = "admin";
 	static final String file = "users";
-	private static ObservableList<User> users;
+	private static ArrayList<User> users;
 	
 	public static void initData(){
-		ObjectInputStream ois;
 		try {
 			File out = new File(dir + File.separator + file);
 			if(!out.exists()){
 		        ObjectOutputStream newout = new ObjectOutputStream(new FileOutputStream(dir + File.separator + file));
-		        users = FXCollections.observableArrayList();
+		        users = new ArrayList<User>();
 		        newout.close();
 			}else{
-				ois = new ObjectInputStream(new FileInputStream(dir + File.separator + file));
-				users = FXCollections.observableArrayList((ArrayList<User>)ois.readObject());
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dir + File.separator + file));
+				users = (ArrayList<User>)ois.readObject();
 				ois.close();
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-	public static ObservableList<User> getData(){
+	public static ArrayList<User> getData(){
 		return users;
 	}
 	public static void writeData(){
 		try{
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(dir + File.separator + file));
-			oos.writeObject(new ArrayList<User>(users));
+			oos.writeObject(users);
 			oos.close();
 		}catch(Exception e){
 			e.printStackTrace();

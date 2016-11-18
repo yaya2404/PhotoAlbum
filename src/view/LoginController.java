@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,7 +35,7 @@ public class LoginController {
 	public void start(Stage mainstage){
 		try{
 			//obtains permitted users from admin folder
-			this.users = new ArrayList<User>(SerializeData.getData());
+			this.users = SerializeData.getData();
 		}catch(Exception a){
 			//a.printStackTrace();
 		}
@@ -78,8 +79,8 @@ public class LoginController {
 		}
 	}
 	private int getUser(String name){
-		for(int i = 0; i < users.size(); i++){
-			if(users.get(i).toString().compareToIgnoreCase(name) == 0){
+		for(int i = 0; i < this.users.size(); i++){
+			if(this.users.get(i).toString().compareToIgnoreCase(name) == 0){
 				return i;
 			}
 		}
