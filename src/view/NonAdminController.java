@@ -36,7 +36,7 @@ public class NonAdminController {
 	
 	private ObservableList<PhotoAlbum> albums;
 	
-	User user;
+	private User user;
 	
 	private Stage stage;
 	/**
@@ -51,6 +51,7 @@ public class NonAdminController {
 	
 	public void cdr(ActionEvent e){
 		Button a = (Button) e.getSource();
+		String name;
 		if(a == create){
 			if(album.getText().isEmpty()){
 				Alert alert = new Alert(AlertType.INFORMATION);
@@ -65,7 +66,11 @@ public class NonAdminController {
 				alert.setContentText("Duplicate Album");
 				alert.showAndWait();
 			}else{
-				albums.add(new PhotoAlbum(album.getText().trim()));
+				
+				//must 
+				name = album.getText().trim();
+				albums.add(new PhotoAlbum(name));
+				this.user.addAlbum(new PhotoAlbum(name));
 				album.clear();
 			}
 		}else if(a == rename){
@@ -88,8 +93,11 @@ public class NonAdminController {
 				alert.setContentText("Duplicate Album");
 				alert.showAndWait();
 			}else{
+				name = album.getText().trim();
 				PhotoAlbum item = listView.getSelectionModel().getSelectedItem();
-				item.setName(album.getText().trim());
+				PhotoAlbum old = this.user.getAlbum(item.toString());
+				old.setName(name);
+				item.setName(name);
 				album.clear();
 			}
 		}else if(a == delete){
@@ -124,6 +132,7 @@ public class NonAdminController {
 	}
 	public void logout(){
 		try{
+			SerializeData.writeData();
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/LoginUI.fxml"));
 			Parent admin = (Parent) fxmlLoader.load();
 			Scene adminpage = new Scene(admin);

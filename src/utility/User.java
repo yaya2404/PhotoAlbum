@@ -11,20 +11,23 @@ public class User implements Serializable{
 	public User(String name) {
 		// TODO Auto-generated constructor stub
 		this.name = name;
-		Albums = new ArrayList<PhotoAlbum>();
+		this.Albums = new ArrayList<PhotoAlbum>();
 	}
 	public String toString(){
 		return this.name;
 	}
 	public PhotoAlbum getAlbum(String name){
-		for(int i = 0; i < Albums.size(); i++){
-			if(Albums.get(i).toString().compareToIgnoreCase(name) == 0){
-				return Albums.get(i);
+		for(int i = 0; i < this.Albums.size(); i++){
+			if(this.Albums.get(i).toString().compareToIgnoreCase(name) == 0){
+				return this.Albums.get(i);
 			}
 		}
 		return null;
 	}
 	public ArrayList<PhotoAlbum> getAlbums(){
 		return this.Albums;
+	}
+	public void addAlbum(PhotoAlbum album){
+		this.Albums.add(album);
 	}
 }

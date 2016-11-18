@@ -34,7 +34,7 @@ public class LoginController {
 	public void start(Stage mainstage){
 		try{
 			//obtains permitted users from admin folder
-			users = new ArrayList<User>(SerializeData.getData());
+			this.users = new ArrayList<User>(SerializeData.getData());
 		}catch(Exception a){
 			//a.printStackTrace();
 		}
@@ -56,7 +56,7 @@ public class LoginController {
 	            currStage.show();
 			}else if((index = getUser(userid)) > -1){
 				//user is in list. Load corresponding photoalbumUI to user
-				User user = users.get(index);
+				User user = this.users.get(index);
 		        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/NonAdminUI.fxml"));
 	            Parent admin = (Parent) fxmlLoader.load();
 	            Scene adminpage = new Scene(admin);
