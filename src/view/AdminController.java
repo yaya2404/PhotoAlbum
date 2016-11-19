@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -36,10 +37,9 @@ public class AdminController{
 	static final String dir = "admin";
 	static final String file = "users";
 	
-	private Stage stage;
+	//private Stage stage;
 	
-	public void start(Stage mainstage){
-		this.stage = mainstage;
+	public void start(){
 		
 		hardusers = SerializeData.getData();
 		users = FXCollections.observableArrayList(hardusers);
@@ -107,9 +107,9 @@ public class AdminController{
 				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/LoginUI.fxml"));
 				Parent admin = (Parent) fxmlLoader.load();
 				Scene adminpage = new Scene(admin);
-				Stage currStage = (Stage) this.stage.getScene().getWindow();
+				Stage currStage = (Stage)((Node)e.getSource()).getScene().getWindow();
 				LoginController loginController = fxmlLoader.getController();
-				loginController.start(this.stage);
+				loginController.start();
 				currStage.setScene(adminpage);
 				currStage.show();
 			}

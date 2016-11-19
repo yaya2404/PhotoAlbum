@@ -31,6 +31,16 @@ public class SerializeData {
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dir + File.separator + file));
 				users = (ArrayList<User>)ois.readObject();
 				ois.close();
+				/**
+				 * The Image object is not serializable so I create the Image object when reading serialized data.
+				 */
+				for(int i = 0; i < users.size(); i++){
+					for(int j = 0; j < users.get(i).getAlbums().size(); j++){
+						for(int k = 0; k < users.get(i).getAlbums().get(j).getPhotos().size(); k++){
+							users.get(i).getAlbums().get(j).getPhotos().get(k).setImage();
+						}
+					}
+				}
 			}
 		}catch(Exception e){
 			e.printStackTrace();

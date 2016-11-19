@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -25,23 +26,22 @@ public class LoginController {
 	
 	@FXML Button enter;
 	@FXML TextField userinput;
-	private Stage stage;
+	//private Stage stage;
 	/**
 	 * Loads existing users from file into a string array
 	 *
 	 */
 	private ArrayList<User> users;
 	
-	public void start(Stage mainstage){
+	public void start(){
 		try{
 			//obtains permitted users from admin folder
 			this.users = SerializeData.getData();
 		}catch(Exception a){
 			//a.printStackTrace();
 		}
-		this.stage = mainstage;
 	}
-	public void login(){
+	public void login(ActionEvent e){
 		String userid = userinput.getText().trim();
 		int index = -1;
 		try{
@@ -50,9 +50,9 @@ public class LoginController {
 		        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AdminUI.fxml"));
 	            Parent admin = (Parent) fxmlLoader.load();
 	            Scene adminpage = new Scene(admin);
-	            Stage currStage = (Stage) this.stage.getScene().getWindow();
+	            Stage currStage = (Stage)((Node)e.getSource()).getScene().getWindow();
 	            AdminController adminController = fxmlLoader.getController();
-	            adminController.start(this.stage);
+	            adminController.start();
 	            currStage.setScene(adminpage);
 	            currStage.show();
 			}else if((index = getUser(userid)) > -1){
@@ -61,9 +61,9 @@ public class LoginController {
 		        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/NonAdminUI.fxml"));
 	            Parent admin = (Parent) fxmlLoader.load();
 	            Scene adminpage = new Scene(admin);
-	            Stage currStage = (Stage) this.stage.getScene().getWindow();
+	            Stage currStage = (Stage)((Node)e.getSource()).getScene().getWindow();
 	            NonAdminController nonadminController = fxmlLoader.getController();
-	            nonadminController.start(this.stage, user);
+	            nonadminController.start(user);
 	            currStage.setScene(adminpage);
 	            currStage.show();
 			}else{

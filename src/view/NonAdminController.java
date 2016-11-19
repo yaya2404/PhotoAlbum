@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -43,12 +44,10 @@ public class NonAdminController {
 	
 	private User user;
 	
-	private Stage stage;
 	/**
 	 * Load albums from database
 	 */
-	public void start(Stage stage, User user){
-		this.stage = stage;
+	public void start(User user){
 		this.user = user;
 		this.hardalbums = this.user.getAlbums();
 		this.albums = FXCollections.observableArrayList(this.hardalbums);
@@ -150,22 +149,23 @@ public class NonAdminController {
 		}
 		SerializeData.writeData();
 	}
-	public void logout(){
+	public void logout(ActionEvent e){
 		try{
-				SerializeData.writeData();
-				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/LoginUI.fxml"));
-				Parent admin = (Parent) fxmlLoader.load();
-				Scene adminpage = new Scene(admin);
-				Stage currStage = (Stage) this.stage.getScene().getWindow();
-				LoginController loginController = fxmlLoader.getController();
-				loginController.start(this.stage);
-				currStage.setScene(adminpage);
-				currStage.show();
-		}catch(Exception e){
-			e.printStackTrace();
+			
+			SerializeData.writeData();
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/LoginUI.fxml"));
+			Parent admin = (Parent) fxmlLoader.load();
+			Scene adminpage = new Scene(admin);
+			Stage currStage = (Stage)((Node)e.getSource()).getScene().getWindow();
+			LoginController loginController = fxmlLoader.getController();
+			loginController.start();
+			currStage.setScene(adminpage);
+			currStage.show();
+		}catch(Exception e1){
+			e1.printStackTrace();
 		}
 	}
-	public void open(){
+	public void open(ActionEvent e){
 		try{
 			if(listView.getSelectionModel().getSelectedIndex() == -1){
 				Alert alert = new Alert(AlertType.INFORMATION);
@@ -178,14 +178,21 @@ public class NonAdminController {
 				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PhotoAlbumUI.fxml"));
 				Parent photoalbum = (Parent) fxmlLoader.load();
 				Scene photoalbumpage = new Scene(photoalbum);
-				Stage currStage = new Stage();
+				Stage currStage = (Stage)((Node)e.getSource()).getScene().getWindow();
 				PhotoAlbumController photoalbumController = fxmlLoader.getController();
-				photoalbumController.start(this.user.getAlbum(listView.getSelectionModel().getSelectedItem().toString()));
+				photoalbumController.start(this.user, this.user.getAlbum(listView.getSelectionModel().getSelectedItem().toString()));
 				currStage.setScene(photoalbumpage);
 				currStage.show();
 			}
-		}catch(Exception e){
-			e.printStackTrace();
+		}catch(FileNotFoundException e1){
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Photo Album");
+			alert.setHeaderText("ERROR!");
+			alert.setContentText("A photo has an invalid file path");
+			alert.showAndWait();
+			e1.printStackTrace();
+		}catch(Exception z){
+			z.printStackTrace();
 		}
 	}
 	public void search(){
