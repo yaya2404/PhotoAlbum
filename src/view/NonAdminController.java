@@ -152,21 +152,41 @@ public class NonAdminController {
 	}
 	public void logout(){
 		try{
-			SerializeData.writeData();
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/LoginUI.fxml"));
-			Parent admin = (Parent) fxmlLoader.load();
-			Scene adminpage = new Scene(admin);
-			Stage currStage = (Stage) this.stage.getScene().getWindow();
-			LoginController loginController = fxmlLoader.getController();
-			loginController.start(this.stage);
-			currStage.setScene(adminpage);
-			currStage.show();
+				SerializeData.writeData();
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/LoginUI.fxml"));
+				Parent admin = (Parent) fxmlLoader.load();
+				Scene adminpage = new Scene(admin);
+				Stage currStage = (Stage) this.stage.getScene().getWindow();
+				LoginController loginController = fxmlLoader.getController();
+				loginController.start(this.stage);
+				currStage.setScene(adminpage);
+				currStage.show();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	public void open(){
-		
+		try{
+			if(listView.getSelectionModel().getSelectedIndex() == -1){
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("User");
+				alert.setHeaderText("ERROR!");
+				alert.setContentText("No item selected.");
+				alert.showAndWait();
+			}else{
+				SerializeData.writeData();
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PhotoAlbumUI.fxml"));
+				Parent photoalbum = (Parent) fxmlLoader.load();
+				Scene photoalbumpage = new Scene(photoalbum);
+				Stage currStage = new Stage();
+				PhotoAlbumController photoalbumController = fxmlLoader.getController();
+				photoalbumController.start(this.user.getAlbum(listView.getSelectionModel().getSelectedItem().toString()));
+				currStage.setScene(photoalbumpage);
+				currStage.show();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	public void search(){
 		
