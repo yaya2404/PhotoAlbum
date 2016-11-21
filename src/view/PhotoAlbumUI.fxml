@@ -9,7 +9,7 @@
    <children>
       <Button fx:id="add" layoutX="14.0" layoutY="390.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="75.0" text="Add" />
       <ScrollPane fx:id="photogallery" hbarPolicy="NEVER" layoutX="14.0" layoutY="17.0" prefHeight="361.0" prefWidth="726.0" vbarPolicy="ALWAYS" />
-      <Button fx:id="exit" layoutX="665.0" layoutY="390.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="75.0" text="Exit" />
-      <Text fx:id="caption" layoutX="108.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="538.13671875" />
+      <Button fx:id="exit" layoutX="665.0" layoutY="390.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="75.0" text="Return" />
+      <Text fx:id="caption" layoutX="108.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caption: " wrappingWidth="538.13671875" />
    </children>
 </AnchorPane>

@@ -16,19 +16,18 @@ import javafx.collections.ObservableList;
 
 public class SerializeData {
 	
-	static final String dir = "admin";
 	static final String file = "users";
 	private static ArrayList<User> users;
 	
 	public static void initData(){
 		try {
-			File out = new File(dir + File.separator + file);
+			File out = new File(file);
 			if(!out.exists()){
-		        ObjectOutputStream newout = new ObjectOutputStream(new FileOutputStream(dir + File.separator + file));
+		        ObjectOutputStream newout = new ObjectOutputStream(new FileOutputStream(file));
 		        users = new ArrayList<User>();
 		        newout.close();
 			}else{
-				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dir + File.separator + file));
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 				users = (ArrayList<User>)ois.readObject();
 				ois.close();
 				/**
@@ -51,7 +50,7 @@ public class SerializeData {
 	}
 	public static void writeData(){
 		try{
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(dir + File.separator + file));
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 			oos.writeObject(users);
 			oos.close();
 		}catch(Exception e){

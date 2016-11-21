@@ -188,7 +188,7 @@ public class PhotoAlbumController {
 							r.printStackTrace();
 						}
 					}else if(mouseEvent.getClickCount() == 1){
-						caption.setText(photoData.get(userAlbum.getIndexOfPhoto(image)).getCaption());
+						caption.setText("Caption: " + photoData.get(userAlbum.getIndexOfPhoto(image)).getCaption());
 						DropShadow borderGlow= new DropShadow();
 						borderGlow.setOffsetY(0f);
 						borderGlow.setOffsetX(0f);

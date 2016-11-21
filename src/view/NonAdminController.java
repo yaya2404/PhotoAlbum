@@ -57,7 +57,8 @@ public class NonAdminController {
 		.selectedItemProperty()
 		.addListener(
 				(obs, oldVal, newVal) -> 
-				showItem()); 
+				showItem());
+		albuminfo.setEditable(false);
 	}
 	
 	private void showItem() {

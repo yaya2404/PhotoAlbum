@@ -63,12 +63,18 @@ public class PhotoController {
 			next.setDisable(true);
 			previous.setDisable(true);
 		}else if(album.indexOf(photo) == 0){
-			previous.setDisable(false);
-		}else if(album.indexOf(photo) == album.size() -1){
+			previous.setDisable(true);
+			next.setDisable(false);
+		}else if(album.indexOf(photo) == (album.size() - 1)){
 			next.setDisable(true);
+			previous.setDisable(false);
+		}else{
+			next.setDisable(false);
+			previous.setDisable(false);
 		}
 		this.album = album;
 		this.photo = photo;
+		photodetails.setEditable(false);
 	}
 	public void buttonAction(ActionEvent e){
 		Button b = (Button)e.getSource();
@@ -113,5 +119,11 @@ public class PhotoController {
 	}
 	public void slide(ActionEvent e){
 		Button b = (Button)e.getSource();
+		int index = this.album.indexOf(photo);
+		if(b == next){
+			start(this.album, this.album.get(index+1));
+		}else if(b == previous){
+			start(this.album, this.album.get(index-1));
+		}
 	}
 }

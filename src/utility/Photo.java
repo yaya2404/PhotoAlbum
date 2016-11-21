@@ -18,17 +18,16 @@ public class Photo implements Serializable{
 	private File file;
 	private Date date;
 	private ArrayList<Tag> tags;
-	private GregorianCalendar calendar;
 	private String caption;
 	private String name;
 	
 	public Photo(File file) throws IllegalArgumentException{
 		// TODO Auto-generated constructor stub
-		this.calendar = new GregorianCalendar();
-		this.calendar.set(Calendar.MILLISECOND, 0);
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.set(Calendar.MILLISECOND, 0);
+		this.date = calendar.getTime();
 		this.file = file;
 		this.tags = new ArrayList<Tag>();
-		this.date = this.calendar.getTime();
 		this.caption = "";
 		this.name = file.getName();
 	}
@@ -36,11 +35,15 @@ public class Photo implements Serializable{
 		return this.tags;
 	}
 	public void addTag(Tag newtag){
-		this.date = this.calendar.getTime();
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.set(Calendar.MILLISECOND, 0);
+		this.date = calendar.getTime();
 		this.tags.add(newtag);
 	}
 	public void setCaption(String text){
-		this.date = this.calendar.getTime();
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.set(Calendar.MILLISECOND, 0);
+		this.date = calendar.getTime();
 		this.caption = text;
 	}
 	public String getCaption(){
@@ -54,12 +57,6 @@ public class Photo implements Serializable{
 		mes.append("Caption: " + this.caption + "\n");
 		//append date
 		mes.append("Date: " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(this.date));
-		/*
-		mes.append("Tags: \n" );
-		for(int i = 0; i < tags.size(); i++){
-			mes.append(tags.get(i).toString() + "\n");
-		}
-		*/
 		return mes.toString();
 	}
 	public File getFile(){
