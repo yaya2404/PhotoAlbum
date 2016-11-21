@@ -20,6 +20,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import utility.Photo;
 import utility.PhotoAlbum;
 import utility.SerializeData;
 import utility.User;
@@ -43,7 +44,8 @@ public class NonAdminController {
 	private ArrayList<PhotoAlbum> hardalbums;
 	
 	private User user;
-	
+	private Photo earliest;
+	private Photo latest;
 	/**
 	 * Load albums from database
 	 */
@@ -58,7 +60,6 @@ public class NonAdminController {
 		.addListener(
 				(obs, oldVal, newVal) -> 
 				showItem());
-		albuminfo.setEditable(false);
 	}
 	
 	private void showItem() {

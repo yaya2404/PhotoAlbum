@@ -34,8 +34,6 @@ public class AdminController{
 	private ObservableList<User> users;
 	private ArrayList<User> hardusers;
 	
-	static final String dir = "admin";
-	static final String file = "users";
 	
 	//private Stage stage;
 	

@@ -25,6 +25,7 @@ public class SerializeData {
 			if(!out.exists()){
 		        ObjectOutputStream newout = new ObjectOutputStream(new FileOutputStream(file));
 		        users = new ArrayList<User>();
+		        newout.writeObject(users);
 		        newout.close();
 			}else{
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));

@@ -119,7 +119,7 @@ public class PhotoController {
 	}
 	public void slide(ActionEvent e){
 		Button b = (Button)e.getSource();
-		int index = this.album.indexOf(photo);
+		int index = this.album.indexOf(this.photo);
 		if(b == next){
 			start(this.album, this.album.get(index+1));
 		}else if(b == previous){
