@@ -18,7 +18,7 @@ public class PhotoAlbum extends Application {
 			AnchorPane root = (AnchorPane)loader.load();
 			LoginController loginController = loader.getController();
 			loginController.start();
-
+			primaryStage.setTitle("Login");
 			Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

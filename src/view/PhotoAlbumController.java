@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,6 +26,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -56,30 +58,34 @@ public class PhotoAlbumController {
 	private ArrayList<Photo> photoData;
 	private User user;
 	public void start(User user, PhotoAlbum album) throws FileNotFoundException{
+		this.userAlbum = album;
+		this.photoData = album.getPhotos();
+		
+		
 		phototile = new TilePane();
 		phototile.setPadding(new Insets(15, 15, 15, 15));
 		phototile.setHgap(15);
-		phototile.setPrefTileHeight(photogallery.getPrefHeight());
-		phototile.setPrefWidth(photogallery.getPrefWidth());
-		this.userAlbum = album;
-		this.photoData = album.getPhotos();
+		phototile.setVgap(15);
+		phototile.setTileAlignment(Pos.TOP_LEFT);
+		phototile.setPrefColumns(4);
+
 		for(int i = 0; i < this.photoData.size(); i++){
-			//Label view = new Label(this.photoData.get(i).getCaption());
-			//view.setTextAlignment(TextAlignment.JUSTIFY);
-			//view.setGraphic(createImageView(this.photoData.get(i).getImage()));
 			ImageView view = createImageView(this.photoData.get(i).getImage());
-			phototile.getChildren().addAll(view);
+			phototile.getChildren().add(view);
 		}
 		photogallery.setContent(phototile);
+		photogallery.setFitToWidth(true);
 		this.user = user;
 	}
 
 	private ImageView createImageView(Image image) throws FileNotFoundException{
 
-		//Image image = new Image(new FileInputStream("imageFile"), 150, 0, true, true);
+	
 		final ImageView imageView = new ImageView(image);
-		imageView.setFitWidth(100);
-		imageView.setFitHeight(100);
+		int size = 100;
+		imageView.setFitWidth(size);
+		imageView.setFitHeight(size);
+		
 		//Context menu to copy, move, and delete a picture.
 		ContextMenu cm = new ContextMenu();
 		MenuItem copyImage = new MenuItem("Copy image");
@@ -111,7 +117,7 @@ public class PhotoAlbumController {
 						alert.setContentText(name + " does not exist");
 						alert.showAndWait();
 					}else{
-						album.getPhotos().add(photoData.get(getIndexOfPhoto(image)));
+						album.getPhotos().add(photoData.get(userAlbum.getIndexOfPhoto(image)));
 					}
 				}
 			}
@@ -141,7 +147,7 @@ public class PhotoAlbumController {
 						alert.setContentText(name + " does not exist");
 						alert.showAndWait();
 					}else{
-						album.getPhotos().add(photoData.remove(getIndexOfPhoto(image)));
+						album.getPhotos().add(photoData.remove(userAlbum.getIndexOfPhoto(image)));
 						imageView.setImage(null);
 						phototile.getChildren().remove(imageView);
 					}
@@ -154,7 +160,7 @@ public class PhotoAlbumController {
 			public void handle(ActionEvent event) {
 				imageView.setImage(null);
 				phototile.getChildren().remove(imageView);
-				photoData.remove(getIndexOfPhoto(image));
+				photoData.remove(userAlbum.getIndexOfPhoto(image));
 			}
 
 		});
@@ -174,29 +180,56 @@ public class PhotoAlbumController {
 							Scene photoalbumpage = new Scene(photoalbum);
 							Stage currStage = new Stage();
 							PhotoController photoController = fxmlLoader.getController();
-							photoController.start(photoData.get(getIndexOfPhoto(image)));
+							photoController.start(photoData,photoData.get(userAlbum.getIndexOfPhoto(image)));
+							currStage.setTitle(((Stage)((Node)mouseEvent.getSource()).getScene().getWindow()).getTitle() + "\\" + photoData.get(userAlbum.getIndexOfPhoto(image)).getName());
 							currStage.setScene(photoalbumpage);
 							currStage.show();
 						}catch(IOException r){
-							
+							r.printStackTrace();
 						}
 					}else if(mouseEvent.getClickCount() == 1){
-						caption.setText(photoData.get(getIndexOfPhoto(image)).getCaption());
+						caption.setText(photoData.get(userAlbum.getIndexOfPhoto(image)).getCaption());
+						DropShadow borderGlow= new DropShadow();
+						borderGlow.setOffsetY(0f);
+						borderGlow.setOffsetX(0f);
+						borderGlow.setColor(Color.CYAN);
+						borderGlow.setWidth(75);
+						borderGlow.setHeight(75);
+						imageView.setEffect(borderGlow);
 					}
 				}else if(mouseEvent.getButton().equals(MouseButton.SECONDARY)){
 					cm.show((Node)mouseEvent.getSource(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
+
 				}
 			}
 		});
-		return imageView;
-	}
-	private int getIndexOfPhoto(Image image){
-		for(int i = 0; i < this.photoData.size(); i++){
-			if(this.photoData.get(i).getImage().equals(image)){
-				return i;
+		//highlight image when user hovers over it.
+		imageView.setOnMouseEntered(new EventHandler<MouseEvent>(){
+
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				DropShadow borderGlow= new DropShadow();
+				borderGlow.setOffsetY(0f);
+				borderGlow.setOffsetX(0f);
+				borderGlow.setColor(Color.LIGHTSKYBLUE);
+				borderGlow.setWidth(75);
+				borderGlow.setHeight(75);
+				imageView.setEffect(borderGlow);
 			}
-		}
-		return -1;
+			
+		});
+		//remove highlight when user's mouse exits the image.
+		imageView.setOnMouseExited(new EventHandler<MouseEvent>(){
+
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				imageView.setEffect(null);
+			}
+			
+		});
+		return imageView;
 	}
 	public void buttonAction(ActionEvent e){
 		Button b = (Button) e.getSource();
@@ -233,6 +266,7 @@ public class PhotoAlbumController {
 	            Stage currStage = (Stage)((Node)e.getSource()).getScene().getWindow();
 	            NonAdminController nonadminController = fxmlLoader.getController();
 	            nonadminController.start(this.user);
+	            currStage.setTitle(this.user.toString());
 	            currStage.setScene(adminpage);
 	            currStage.show();
 			}catch(IOException e1){

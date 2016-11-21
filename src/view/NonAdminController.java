@@ -159,6 +159,7 @@ public class NonAdminController {
 			Stage currStage = (Stage)((Node)e.getSource()).getScene().getWindow();
 			LoginController loginController = fxmlLoader.getController();
 			loginController.start();
+			currStage.setTitle("Login");
 			currStage.setScene(adminpage);
 			currStage.show();
 		}catch(Exception e1){
@@ -181,6 +182,7 @@ public class NonAdminController {
 				Stage currStage = (Stage)((Node)e.getSource()).getScene().getWindow();
 				PhotoAlbumController photoalbumController = fxmlLoader.getController();
 				photoalbumController.start(this.user, this.user.getAlbum(listView.getSelectionModel().getSelectedItem().toString()));
+				currStage.setTitle(this.user.toString() + "\\" + listView.getSelectionModel().getSelectedItem().toString());
 				currStage.setScene(photoalbumpage);
 				currStage.show();
 			}

@@ -53,18 +53,20 @@ public class LoginController {
 	            Stage currStage = (Stage)((Node)e.getSource()).getScene().getWindow();
 	            AdminController adminController = fxmlLoader.getController();
 	            adminController.start();
+	            currStage.setTitle("Admin");
 	            currStage.setScene(adminpage);
 	            currStage.show();
 			}else if((index = getUser(userid)) > -1){
 				//user is in list. Load corresponding photoalbumUI to user
 				User user = this.users.get(index);
 		        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/NonAdminUI.fxml"));
-	            Parent admin = (Parent) fxmlLoader.load();
-	            Scene adminpage = new Scene(admin);
+	            Parent nonadmin = (Parent) fxmlLoader.load();
+	            Scene nonadminpage = new Scene(nonadmin);
 	            Stage currStage = (Stage)((Node)e.getSource()).getScene().getWindow();
 	            NonAdminController nonadminController = fxmlLoader.getController();
 	            nonadminController.start(user);
-	            currStage.setScene(adminpage);
+	            currStage.setTitle(userid);
+	            currStage.setScene(nonadminpage);
 	            currStage.show();
 			}else{
 				//user does not exist in list of users

@@ -105,12 +105,13 @@ public class AdminController{
 			}else if(b == logout){
 				SerializeData.writeData();
 				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/LoginUI.fxml"));
-				Parent admin = (Parent) fxmlLoader.load();
-				Scene adminpage = new Scene(admin);
+				Parent nonadmin = (Parent) fxmlLoader.load();
+				Scene nonadminpage = new Scene(nonadmin);
 				Stage currStage = (Stage)((Node)e.getSource()).getScene().getWindow();
 				LoginController loginController = fxmlLoader.getController();
 				loginController.start();
-				currStage.setScene(adminpage);
+				currStage.setTitle("Login");
+				currStage.setScene(nonadminpage);
 				currStage.show();
 			}
 			SerializeData.writeData();

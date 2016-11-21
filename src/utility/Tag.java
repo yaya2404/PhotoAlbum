@@ -19,6 +19,6 @@ public class Tag implements Serializable{
 		return this.value;
 	}
 	public String toString(){
-		return "(" + this.name+ ": " + this.value + ")";
+		return this.name+ ": " + this.value;
 	}
 }

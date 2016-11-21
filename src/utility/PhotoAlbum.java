@@ -3,6 +3,8 @@ package utility;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javafx.scene.image.Image;
+
 public class PhotoAlbum implements Serializable{
 	
 	private String name;
@@ -29,5 +31,13 @@ public class PhotoAlbum implements Serializable{
 	}
 	public ArrayList<Photo> getPhotos(){
 		return this.photos;
+	}
+	public int getIndexOfPhoto(Image image){
+		for(int i = 0; i < this.photos.size(); i++){
+			if(this.photos.get(i).getImage().equals(image)){
+				return i;
+			}
+		}
+		return -1;
 	}
 }

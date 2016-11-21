@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="781.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PhotoAlbumController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PhotoAlbumController">
    <children>
       <Button fx:id="add" layoutX="14.0" layoutY="390.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="75.0" text="Add" />
-      <ScrollPane fx:id="photogallery" hbarPolicy="NEVER" layoutX="14.0" layoutY="17.0" prefHeight="361.0" prefWidth="756.0" vbarPolicy="ALWAYS" />
-      <Button fx:id="exit" layoutX="692.0" layoutY="390.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="75.0" text="Exit" />
-      <Text fx:id="caption" layoutX="108.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="568.13671875" />
+      <ScrollPane fx:id="photogallery" hbarPolicy="NEVER" layoutX="14.0" layoutY="17.0" prefHeight="361.0" prefWidth="726.0" vbarPolicy="ALWAYS" />
+      <Button fx:id="exit" layoutX="665.0" layoutY="390.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="75.0" text="Exit" />
+      <Text fx:id="caption" layoutX="108.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="538.13671875" />
    </children>
 </AnchorPane>
