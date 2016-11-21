@@ -7,16 +7,16 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="524.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PhotoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="346.0" prefWidth="524.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PhotoController">
    <children>
-      <ImageView fx:id = "imageview" fitHeight="425.0" fitWidth="258.0" layoutX="1.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imageview" fitHeight="200.0" fitWidth="258.0" layoutX="1.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
       <ListView fx:id="taglist" layoutX="400.0" layoutY="8.0" prefHeight="200.0" prefWidth="120.0" />
       <TextArea fx:id="photodetails" layoutX="272.0" layoutY="8.0" prefHeight="200.0" prefWidth="120.0" promptText="Photo Details" />
-      <TextField fx:id="tagname" layoutX="272.0" layoutY="221.0" prefHeight="25.0" prefWidth="248.0" promptText="Tag Name" />
-      <TextField fx:id="tagvalue" layoutX="272.0" layoutY="253.0" prefHeight="25.0" prefWidth="248.0" promptText="Tag Value" />
-      <Button fx:id="tag" layoutX="330.0" layoutY="285.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="62.0" text="Tag" />
-      <Button fx:id="remove" layoutX="400.0" layoutY="285.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="62.0" text="Remove" />
-      <Button fx:id="caption" layoutX="343.0" layoutY="408.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="99.0" text="Caption" />
-      <TextArea fx:id="captiontext" layoutX="273.0" layoutY="317.0" prefHeight="79.0" prefWidth="248.0" promptText="Insert Caption Text" />
+      <TextField fx:id="tagname" layoutX="268.0" layoutY="221.0" prefHeight="25.0" prefWidth="248.0" promptText="Tag Name" />
+      <TextField fx:id="tagvalue" layoutX="268.0" layoutY="274.0" prefHeight="25.0" prefWidth="248.0" promptText="Tag Value" />
+      <Button fx:id="tag" layoutX="326.0" layoutY="311.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="62.0" text="Tag" />
+      <Button fx:id="remove" layoutX="396.0" layoutY="311.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="62.0" text="Remove" />
+      <Button fx:id="caption" layoutX="84.0" layoutY="311.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="99.0" text="Caption" />
+      <TextArea fx:id="captiontext" layoutX="14.0" layoutY="220.0" prefHeight="79.0" prefWidth="248.0" promptText="Insert Caption Text" />
    </children>
 </AnchorPane>
