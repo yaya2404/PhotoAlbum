@@ -116,6 +116,7 @@ public class NonAdminController {
 		.addListener(
 				(obs, oldVal, newVal) -> 
 				showItem());
+		albuminfo.setEditable(false);
 	}
 	/**
 	 * <p>When a user selects an item from the list view, the album information is
