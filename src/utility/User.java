@@ -2,6 +2,7 @@ package utility;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class User implements Serializable{
 	
@@ -29,5 +30,27 @@ public class User implements Serializable{
 	}
 	public void addAlbum(PhotoAlbum album){
 		this.Albums.add(album);
+	}
+	public ArrayList<Photo> searchByDate(Date start, Date end){
+		ArrayList<Photo> query = new ArrayList<Photo>();
+		for(int i = 0; i < Albums.size(); i++){
+			for(int j = 0; j < Albums.get(i).getPhotos().size(); j++){
+				if(Albums.get(i).getPhotos().get(j).getDate().after(start) && Albums.get(i).getPhotos().get(j).getDate().before(end)){
+					query.add(Albums.get(i).getPhotos().get(j));
+				}
+			}
+		}
+		return query;
+	}
+	public ArrayList<Photo> searchByTag(Tag tag){
+		ArrayList<Photo> query = new ArrayList<Photo>();
+		for(int i = 0; i < Albums.size(); i++){
+			for(int j = 0; j < Albums.get(i).getPhotos().size(); j++){
+				if(Albums.get(i).getPhotos().get(j).containsTag(tag)){
+					query.add(Albums.get(i).getPhotos().get(j));
+				}
+			}
+		}
+		return query;
 	}
 }

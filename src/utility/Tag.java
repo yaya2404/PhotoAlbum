@@ -18,6 +18,12 @@ public class Tag implements Serializable{
 	public String getValue(){
 		return this.value;
 	}
+	public boolean equals(Tag tag){
+		if((tag.getName().compareToIgnoreCase(this.name) == 0) && (tag.getValue().compareToIgnoreCase(this.value) == 0)){
+			return true;
+		}
+		return false;
+	}
 	public String toString(){
 		return this.name+ ": " + this.value;
 	}

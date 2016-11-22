@@ -114,7 +114,11 @@ public class AdminController{
 			}
 			SerializeData.writeData();
 		}catch(IOException z){
-			z.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("User");
+			alert.setHeaderText("ERROR!");
+			alert.setContentText("Application error: mercy on my grade.");
+			alert.showAndWait();
 		}
 	}
 	private boolean containUser(String name){

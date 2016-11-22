@@ -85,7 +85,7 @@ public class PhotoController {
 				alert.setHeaderText("ERROR!");
 				alert.setContentText("Tag fields cannot be empty");
 				alert.showAndWait();
-			}else if(obstaglist.contains(new Tag(tagname.getText().trim(),tagvalue.getText().trim()))){
+			}else if(this.photo.containsTag(new Tag(tagname.getText().trim(),tagvalue.getText().trim()))){
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Photo");
 				alert.setHeaderText("ERROR!");

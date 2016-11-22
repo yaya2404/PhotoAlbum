@@ -2,7 +2,11 @@ package view;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +27,7 @@ import javafx.stage.Stage;
 import utility.Photo;
 import utility.PhotoAlbum;
 import utility.SerializeData;
+import utility.Tag;
 import utility.User;
 
 public class NonAdminController {
@@ -44,8 +49,6 @@ public class NonAdminController {
 	private ArrayList<PhotoAlbum> hardalbums;
 	
 	private User user;
-	private Photo earliest;
-	private Photo latest;
 	/**
 	 * Load albums from database
 	 */
@@ -165,7 +168,11 @@ public class NonAdminController {
 			currStage.setScene(adminpage);
 			currStage.show();
 		}catch(Exception e1){
-			e1.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("User");
+			alert.setHeaderText("ERROR!");
+			alert.setContentText("Application error: mercy on my grade.");
+			alert.showAndWait();
 		}
 	}
 	public void open(ActionEvent e){
@@ -190,16 +197,79 @@ public class NonAdminController {
 			}
 		}catch(FileNotFoundException e1){
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Photo Album");
+			alert.setTitle("User");
 			alert.setHeaderText("ERROR!");
-			alert.setContentText("A photo has an invalid file path");
+			alert.setContentText("A photo has an invalid file path"); //check this
 			alert.showAndWait();
 			e1.printStackTrace();
 		}catch(Exception z){
-			z.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("User");
+			alert.setHeaderText("ERROR!");
+			alert.setContentText("Application error: mercy on my grade.");
+			alert.showAndWait();
 		}
 	}
-	public void search(){
-		
+	public void search(ActionEvent e){
+		if((!tagtype.getText().trim().isEmpty() && !tagvalue.getText().trim().isEmpty()) || (startdate.getValue() != null && enddate.getValue() != null)){
+			ArrayList<Photo> query = new ArrayList<Photo>();
+			if((startdate.getValue() != null && enddate.getValue() != null)){
+				GregorianCalendar start = new GregorianCalendar();
+				GregorianCalendar end = new GregorianCalendar();
+				start.set(Calendar.MILLISECOND, 0);
+				start.set(startdate.getValue().getYear(), startdate.getValue().getMonthValue()-1, startdate.getValue().getDayOfMonth(), 0, 0,0);
+				end.set(Calendar.MILLISECOND, 0);
+				end.set(enddate.getValue().getYear(), enddate.getValue().getMonthValue()-1, enddate.getValue().getDayOfMonth(),23,59,59);
+				Date s = start.getTime();
+				Date en = end.getTime();
+				query.addAll(this.user.searchByDate(s, en));
+			}
+			if((!tagtype.getText().trim().isEmpty() && !tagvalue.getText().trim().isEmpty())){
+				Tag test = new Tag(tagtype.getText().trim(), tagvalue.getText().trim());
+				ArrayList<Photo> tagquery = this.user.searchByTag(test);
+				for(int i = 0; i < tagquery.size();i++){
+					if(!query.contains(tagquery.get(i))){
+						query.add(tagquery.get(i));
+					}
+				}
+			}
+			if(query.size() == 0){
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("User");
+				alert.setHeaderText("Search Photos");
+				alert.setContentText("No photos were found in search");
+				alert.showAndWait();
+			}else{
+				tagtype.clear();
+				tagvalue.clear();
+				try{
+					SerializeData.writeData();
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/SearchUI.fxml"));
+					Parent search = (Parent) fxmlLoader.load();
+					Scene searchpage = new Scene(search);
+					Stage currStage = new Stage();
+					SearchController searchController = fxmlLoader.getController();
+					searchController.start(this.user,query);
+					currStage.setTitle("Search");
+					currStage.setScene(searchpage);
+					currStage.show();
+
+				}catch(IOException e1){
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("User");
+					alert.setHeaderText("ERROR!");
+					alert.setContentText("Application error: mercy on my grade.");
+					alert.showAndWait();
+					e1.printStackTrace();
+				}
+			}
+		}else{
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("User");
+			alert.setHeaderText("ERROR!");
+			alert.setContentText("Search error: must enter both a tag name and tag value");
+			alert.showAndWait();
+		}
+
 	}
 }

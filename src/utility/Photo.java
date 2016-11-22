@@ -71,4 +71,12 @@ public class Photo implements Serializable{
 	public void setImage() throws FileNotFoundException{
 		this.image = new Image(new FileInputStream(this.file));
 	}
+	public boolean containsTag(Tag tag){
+		for(int i = 0; i < tags.size(); i++){
+			if(tags.get(i).equals(tag)){
+				return true;
+			}
+		}
+		return false;
+	}
 }

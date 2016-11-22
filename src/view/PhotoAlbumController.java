@@ -67,7 +67,6 @@ public class PhotoAlbumController {
 		phototile.setHgap(15);
 		phototile.setVgap(15);
 		phototile.setTileAlignment(Pos.TOP_LEFT);
-		phototile.setPrefColumns(4);
 
 		for(int i = 0; i < this.photoData.size(); i++){
 			ImageView view = createImageView(this.photoData.get(i).getImage());
@@ -102,13 +101,7 @@ public class PhotoAlbumController {
 
 				if(result.isPresent()){name = result.get().trim();}
 
-				if(name.isEmpty()){
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Copy Photo");
-					alert.setHeaderText("ERROR!");
-					alert.setContentText("Photo name cannot be empty");
-					alert.showAndWait();
-				}else{
+				if(!name.isEmpty()){
 					PhotoAlbum album = user.getAlbum(name);
 					if(album == null){
 						Alert alert = new Alert(AlertType.INFORMATION);
@@ -132,13 +125,7 @@ public class PhotoAlbumController {
 				Optional<String> result = dialog.showAndWait();
 				String name = "";
 				if(result.isPresent()){name = result.get().trim();}
-				if(name.isEmpty()){
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Move Photo");
-					alert.setHeaderText("ERROR!");
-					alert.setContentText("Photo name cannot be empty");
-					alert.showAndWait();
-				}else{
+				if(!name.isEmpty()){
 					PhotoAlbum album = user.getAlbum(name);
 					if(album == null){
 						Alert alert = new Alert(AlertType.INFORMATION);

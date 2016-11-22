@@ -29,7 +29,7 @@ public class PhotoAlbum implements Serializable{
 		if(photos.size() == 0){
 			return "Name: " + this.name + "\n" + "Number of Photos: " + photos.size() + "\n"; 
 		}
-		return "Name: " + this.name + "\n" + "Number of Photos: " + photos.size() + "\n" + "Oldest Photo: " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(getLatestPhoto().getDate()) + "\n" + "Range of Dates: " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(getEarliestPhoto().getDate()) + "-" + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(getLatestPhoto().getDate()) + "\n"; 
+		return "Name: " + this.name + "\n" + "Number of Photos: " + photos.size() + "\n" + "Oldest Photo: " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(getLatestPhoto().getDate()) + "\n" + "Range of Dates: " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(getEarliestPhoto().getDate()) + " to " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(getLatestPhoto().getDate()) + "\n"; 
 	}
 	public ArrayList<Photo> getPhotos(){
 		return this.photos;

@@ -34,12 +34,8 @@ public class LoginController {
 	private ArrayList<User> users;
 	
 	public void start(){
-		try{
-			//obtains permitted users from admin folder
-			this.users = SerializeData.getData();
-		}catch(Exception a){
-			//a.printStackTrace();
-		}
+		//obtains permitted users from admin folder
+		this.users = SerializeData.getData();
 	}
 	public void login(ActionEvent e){
 		String userid = userinput.getText().trim();
@@ -77,7 +73,11 @@ public class LoginController {
 				alert.showAndWait();
 			}
 		}catch(IOException h){
-			h.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("User");
+			alert.setHeaderText("ERROR!");
+			alert.setContentText("Application error: mercy on my grade.");
+			alert.showAndWait();
 		}
 	}
 	private int getUser(String name){
