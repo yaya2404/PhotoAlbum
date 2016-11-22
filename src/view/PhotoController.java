@@ -145,7 +145,6 @@ public class PhotoController {
 			next.setDisable(false);
 			previous.setDisable(false);
 		}
-
 		photodetails.setEditable(false);
 	}
 	/**

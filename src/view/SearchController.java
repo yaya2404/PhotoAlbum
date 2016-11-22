@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -18,8 +19,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import utility.Photo;
 import utility.PhotoAlbum;
@@ -45,6 +51,7 @@ public class SearchController {
 	 */
 	@FXML Button ret;
 	
+	@FXML Text caption;
 	/**
 	 * User that is doing search.
 	 */
@@ -68,8 +75,17 @@ public class SearchController {
 		
 		for(int i = 0; i < query.size(); i++){
 			ImageView view = new ImageView(query.get(i).getImage());
+			String text = query.get(i).getCaption();
 			view.setFitWidth(100);
 			view.setFitHeight(100);
+			view.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					if(mouseEvent.getClickCount() == 1){
+							caption.setText("Caption: " + text);
+					}
+				}
+			});
 			phototile.getChildren().add(view);
 		}
 		scrollpane.setContent(phototile);
