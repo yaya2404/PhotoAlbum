@@ -29,28 +29,81 @@ import utility.PhotoAlbum;
 import utility.SerializeData;
 import utility.Tag;
 import utility.User;
-
+/**
+ * @author Matthew Ya
+ * @author Taehee Lee
+ */
 public class NonAdminController {
+	/**
+	 * Corresponds to the create button on NonAdminUI
+	 */
 	@FXML Button create;
+	/**
+	 * Corresponds to the delete button on NonAdminUI
+	 */
 	@FXML Button delete;
+	/**
+	 * Corresponds to the rename button on NonAdminUI
+	 */
 	@FXML Button rename;
+	/**
+	 * Corresponds to the open button on NonAdminUI
+	 */
 	@FXML Button open;
+	/**
+	 * Corresponds to the search button on NonAdminUI
+	 */
 	@FXML Button search;
+	/**
+	 * Corresponds to the logout button on NonAdminUI
+	 */
 	@FXML Button logout;
+	/**
+	 * TextField where user enters the name of the album. Used for create and rename.
+	 */
 	@FXML TextField album;
+	/**
+	 * TextField where user enters the name of the tag type. Used for Search.
+	 */
 	@FXML TextField tagtype;
+	/**
+	 * TextField where user enters the value of the tag value. Used for Search.
+	 */
 	@FXML TextField tagvalue;
+	/**
+	 * list of name of albums used for ListView.
+	 */
 	@FXML ListView<PhotoAlbum> listView;
+	/**
+	 * Textarea that displays information corresponding to the album selected in the listview.
+	 */
 	@FXML TextArea albuminfo;
+	/**
+	 * datepicker that allows user to pick start date. Used for Search.
+	 */
 	@FXML DatePicker startdate;
+	/**
+	 * datepicker that allows user to pick end date. Used for Search.
+	 */
 	@FXML DatePicker enddate;
 	
+	/**
+	 * ObservableList that is used to set content for listview.
+	 */
 	private ObservableList<PhotoAlbum> albums;
+	/**
+	 * List of albums that the user that the has on disk.
+	 */
 	private ArrayList<PhotoAlbum> hardalbums;
 	
+	/**
+	 * User that is in currently logged into the non-admin subsystem.
+	 */
 	private User user;
 	/**
-	 * Load albums from database
+	 * Loads the user albums onto the listview
+	 * 
+	 * @param user		User that is currently logged in
 	 */
 	public void start(User user){
 		this.user = user;
@@ -64,12 +117,27 @@ public class NonAdminController {
 				(obs, oldVal, newVal) -> 
 				showItem());
 	}
-	
+	/**
+	 * <p>When a user selects an item from the list view, the album information is
+	 * displayed in the TextArea albuminfo.
+	 */
 	private void showItem() {
 		// TODO Auto-generated method stub
 		albuminfo.setText(listView.getSelectionModel().getSelectedItem().getInfo());
 	}
-
+	/**
+	 * Creates, renames, or deletes and album
+	 * 
+	 * <p>Create: the user enters a name into the TextField album and presses the create button.
+	 * The user cannot enter an empty album name or duplicate album name.
+	 * 
+	 * <p>Rename: the user selects an album from the listview, types in a new album name, and presses rename.
+	 * The user cannot have two albums of the same name. 
+	 * 
+	 * <p>Delete: the user selects an album from the listview and presses delete to remove the album from his/her disk.
+	 * 
+	 * @param e event from button create, rename, or delete.
+	 */
 	public void cdr(ActionEvent e){
 		Button a = (Button) e.getSource();
 		String name;
@@ -154,6 +222,12 @@ public class NonAdminController {
 		}
 		SerializeData.writeData();
 	}
+	/**
+	 * Allows user to logout from nonadmin subsystem and return to login page.
+	 * 
+	 * 
+	 * @param e event from the logout button
+	 */
 	public void logout(ActionEvent e){
 		try{
 			
@@ -175,6 +249,11 @@ public class NonAdminController {
 			alert.showAndWait();
 		}
 	}
+	/**
+	 * Redirects the page to the contents of the selected album.
+	 * 
+	 * @param e event from the open button.
+	 */
 	public void open(ActionEvent e){
 		try{
 			if(listView.getSelectionModel().getSelectedIndex() == -1){
@@ -209,6 +288,15 @@ public class NonAdminController {
 			alert.showAndWait();
 		}
 	}
+	/**
+	 * Searches for photos based on tag and range date queries.
+	 * 
+	 * <p> The user has the option to search by tag, range dates, or both tag and range dates.
+	 * The search will open a new window containing the photos that match the queries. If no
+	 * photos were found then the user be notified by an Alert message.
+	 * 
+	 * @param e	event from the Search button
+	 */
 	public void search(ActionEvent e){
 		if((!tagtype.getText().trim().isEmpty() && !tagvalue.getText().trim().isEmpty()) || (startdate.getValue() != null && enddate.getValue() != null)){
 			ArrayList<Photo> query = new ArrayList<Photo>();
@@ -246,7 +334,7 @@ public class NonAdminController {
 					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/SearchUI.fxml"));
 					Parent search = (Parent) fxmlLoader.load();
 					Scene searchpage = new Scene(search);
-					Stage currStage = new Stage();
+					Stage currStage = (Stage)((Node)e.getSource()).getScene().getWindow();
 					SearchController searchController = fxmlLoader.getController();
 					searchController.start(this.user,query);
 					currStage.setTitle("Search");
@@ -261,13 +349,24 @@ public class NonAdminController {
 					alert.showAndWait();
 				}
 			}
-		}else{
+		}else if((tagtype.getText().trim().isEmpty() && tagvalue.getText().trim().isEmpty()) && (startdate.getValue() == null && enddate.getValue() == null)){
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("User");
+			alert.setHeaderText("ERROR!");
+			alert.setContentText("Search error: empty fields");
+			alert.showAndWait();
+		}else if(tagtype.getText().trim().isEmpty() && tagvalue.getText().trim().isEmpty()){
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("User");
 			alert.setHeaderText("ERROR!");
 			alert.setContentText("Search error: must enter both a tag name and tag value");
 			alert.showAndWait();
+		}else if(startdate.getValue() == null && enddate.getValue() == null){
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("User");
+			alert.setHeaderText("ERROR!");
+			alert.setContentText("Search error: both start date and end date must be specified");
+			alert.showAndWait();
 		}
-
 	}
 }

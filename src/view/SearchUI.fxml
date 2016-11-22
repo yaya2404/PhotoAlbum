@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<!-- Matthew Ya, Taehee Lee	 -->
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="308.0" prefWidth="370.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SearchController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="301.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SearchController">
    <children>
-      <ScrollPane fx:id="scrollpane" hbarPolicy="NEVER" layoutX="11.0" layoutY="14.0" prefHeight="250.0" prefWidth="350.0" vbarPolicy="ALWAYS" />
-      <Button fx:id="create" layoutX="159.0" layoutY="269.0" mnemonicParsing="false" onAction="#create" text="Create" />
+      <ScrollPane fx:id="scrollpane" hbarPolicy="NEVER" layoutX="11.0" layoutY="14.0" prefHeight="250.0" prefWidth="400.0" vbarPolicy="ALWAYS" />
+      <Button fx:id="create" layoutX="11.0" layoutY="269.0" mnemonicParsing="false" onAction="#create" text="Create" />
+      <Button fx:id="ret" layoutX="359.0" layoutY="269.0" mnemonicParsing="false" onAction="#returnToUserPage" text="Return" />
    </children>
 </AnchorPane>
