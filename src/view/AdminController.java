@@ -66,10 +66,10 @@ public class AdminController{
 	 */
 	public void start(){
 		
-		hardusers = SerializeData.getData();
-		users = FXCollections.observableArrayList(hardusers);
+		this.hardusers = SerializeData.getData();
+		this.users = FXCollections.observableArrayList(this.hardusers);
 		
-		listview.setItems(users);
+		listview.setItems(this.users);
 	}
 	/**
 	 * Handles the add, delete, or logout button actions.
@@ -107,12 +107,12 @@ public class AdminController{
 					alert.setContentText("Duplicate user");
 					alert.showAndWait();
 				}else{
-					users.add(new User(userid.getText().trim()));
-					hardusers.add(new User(userid.getText().trim()));
+					User user = new User(userid.getText().trim());
+					this.users.add(user);
+					this.hardusers.add(user);
 					userid.clear();
 				}
 			}else if(b == delete){
-
 				if(users.size() == 0){
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Admin");
@@ -126,22 +126,11 @@ public class AdminController{
 					alert.setContentText("No item selected.");
 					alert.showAndWait();
 				}else{
-					User item = listview.getSelectionModel().getSelectedItem();
-					int index = users.indexOf(item);
-					users.remove(item);
-					hardusers.remove(item);
-					if(users.size() != 0){
-						if(index+1 > users.size()){
-							listview.getSelectionModel().selectPrevious();
-						}else{
-							listview.getSelectionModel().selectNext();
-						}
-					}else{
-						listview.getSelectionModel().clearSelection();
-					}
+					this.hardusers.remove(listview.getSelectionModel().getSelectedIndex());
+					this.users.remove(listview.getSelectionModel().getSelectedIndex());
+					listview.getSelectionModel().clearSelection();
 				}
 			}else if(b == logout){
-				SerializeData.writeData();
 				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/LoginUI.fxml"));
 				Parent nonadmin = (Parent) fxmlLoader.load();
 				Scene nonadminpage = new Scene(nonadmin);
