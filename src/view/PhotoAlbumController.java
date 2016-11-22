@@ -224,15 +224,28 @@ public class PhotoAlbumController {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle("Add Photo");
 			File photofile = fileChooser.showOpenDialog((Stage)((Node)e.getSource()).getScene().getWindow());
+			
+			
 			if(photofile != null){
-
 				try {
-					
-					Photo newphoto = new Photo(photofile);
-					newphoto.setImage();
-					phototile.getChildren().addAll(createImageView(newphoto.getImage()));
-					this.photoData.size();
-					this.photoData.add(newphoto);
+					String extension = "";
+					int i = photofile.getName().lastIndexOf('.');
+					if(i > 0){
+						extension = photofile.getName().substring(i+1);
+					}
+					if(extension.compareToIgnoreCase("png") == 0 ||extension.compareToIgnoreCase("gif") == 0 ||extension.compareToIgnoreCase("jpg") == 0 ||extension.compareToIgnoreCase("tif") == 0 ){
+						Photo newphoto = new Photo(photofile);
+						newphoto.setImage();
+						phototile.getChildren().addAll(createImageView(newphoto.getImage()));
+						this.photoData.size();
+						this.photoData.add(newphoto);
+					}else{
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Photo Album");
+						alert.setHeaderText("Error: File extension not supported");
+						alert.setContentText("Supported file extensions are: jpg, gif, png, or tif");
+						alert.showAndWait();
+					}
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -240,8 +253,13 @@ public class PhotoAlbumController {
 					alert.setHeaderText("ERROR!");
 					alert.setContentText("Invalid file path");
 					alert.showAndWait();
-					e1.printStackTrace();
 				}
+			}else{
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Photo Album");
+				alert.setHeaderText("ERROR!");
+				alert.setContentText("Null Error: File does not exist");
+				alert.showAndWait();
 			}
 
 		}else if(b == exit){
@@ -257,7 +275,11 @@ public class PhotoAlbumController {
 	            currStage.setScene(adminpage);
 	            currStage.show();
 			}catch(IOException e1){
-				e1.printStackTrace();
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("User");
+				alert.setHeaderText("ERROR!");
+				alert.setContentText("Application error: mercy on my grade.");
+				alert.showAndWait();
 			}
 		}
 		SerializeData.writeData();

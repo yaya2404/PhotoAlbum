@@ -199,9 +199,8 @@ public class NonAdminController {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("User");
 			alert.setHeaderText("ERROR!");
-			alert.setContentText("A photo has an invalid file path"); //check this
+			alert.setContentText("A photo has an invalid file path");
 			alert.showAndWait();
-			e1.printStackTrace();
 		}catch(Exception z){
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("User");
@@ -260,7 +259,6 @@ public class NonAdminController {
 					alert.setHeaderText("ERROR!");
 					alert.setContentText("Application error: mercy on my grade.");
 					alert.showAndWait();
-					e1.printStackTrace();
 				}
 			}
 		}else{
