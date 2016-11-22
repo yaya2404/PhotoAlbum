@@ -1,0 +1,4 @@
+A note regarding the Safe Quit feature:
+
+We choose not to implement a safe quit because the user can easily quit the application by "x-ing" out of the application. The way
+our application saves data is safe enough to ensure that all updates to data are saved onto disk before quitting.
