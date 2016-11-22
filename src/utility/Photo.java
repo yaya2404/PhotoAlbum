@@ -66,9 +66,7 @@ public class Photo implements Serializable{
 	 * @param newtag	the new tag to be added to the photo
 	 */
 	public void addTag(Tag newtag){
-		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.set(Calendar.MILLISECOND, 0);
-		this.date = calendar.getTime();
+		setTime();
 		this.tags.add(newtag);
 	}
 	/**
@@ -77,9 +75,7 @@ public class Photo implements Serializable{
 	 * @param index		index of tag to be removed
 	 */
 	public void removeTag(int index){
-		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.set(Calendar.MILLISECOND, 0);
-		this.date = calendar.getTime();
+		setTime();
 		this.tags.remove(index);
 	}
 	/**
@@ -88,9 +84,7 @@ public class Photo implements Serializable{
 	 * @param text	the new text to be captioned onto the photo
 	 */
 	public void setCaption(String text){
-		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.set(Calendar.MILLISECOND, 0);
-		this.date = calendar.getTime();
+		setTime();
 		this.caption = text;
 	}
 	/**
@@ -99,6 +93,14 @@ public class Photo implements Serializable{
 	 */
 	public String getCaption(){
 		return this.caption;
+	}
+	/**
+	 * Changes the time of the photo when the photo is edited
+	 */
+	public void setTime(){
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.set(Calendar.MILLISECOND, 0);
+		this.date = calendar.getTime();
 	}
 	/**
 	 * 

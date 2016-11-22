@@ -81,7 +81,7 @@ public class User implements Serializable{
 	 * 
 	 * 
 	 * @param tag	tag that is contained in a photo
-	 * @return		returns an ArrayList of Photo objects that contain the tag.
+	 * @return		returns an ArrayList of Photo objects the contain the tag
 	 */
 	public ArrayList<Photo> searchByTag(Tag tag){
 		ArrayList<Photo> query = new ArrayList<Photo>();
@@ -94,5 +94,4 @@ public class User implements Serializable{
 		}
 		return query;
 	}
-	
 }

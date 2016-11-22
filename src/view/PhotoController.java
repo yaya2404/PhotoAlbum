@@ -201,6 +201,7 @@ public class PhotoController {
 			alert.showAndWait();
 		}else{
 			photo.removeTag(taglist.getSelectionModel().getSelectedIndex());
+			obstaglist.remove(taglist.getSelectionModel().getSelectedIndex());
 		}
 		SerializeData.writeData();
 	}

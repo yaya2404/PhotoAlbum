@@ -1,5 +1,6 @@
 package view;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -23,6 +24,7 @@ import javafx.stage.Stage;
 import utility.Photo;
 import utility.PhotoAlbum;
 import utility.SerializeData;
+import utility.Tag;
 import utility.User;
 /**
  * @author Matthew Ya
@@ -97,10 +99,26 @@ public class SearchController {
 				alert.setContentText("Album name " + name + " already exists.");
 				alert.showAndWait();
 			}else{
-				PhotoAlbum newalbum = new PhotoAlbum(name);
-				newalbum.getPhotos().addAll(query);
-				user.getAlbums().add(newalbum);
-				SerializeData.writeData();
+				try{
+					PhotoAlbum newalbum = new PhotoAlbum(name);
+					for(Photo old: this.query){
+						Photo newphoto = new Photo(old.getFile());
+						newphoto.setImage();
+						newphoto.setCaption(old.getCaption());
+						for(Tag tag: old.getTags()){
+							newphoto.addTag(new Tag(tag.getName(),tag.getValue()));
+						}
+						newalbum.getPhotos().add(newphoto);
+					}
+					user.getAlbums().add(newalbum);
+					SerializeData.writeData();
+				}catch(FileNotFoundException e1){
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Search");
+					alert.setHeaderText("ERROR!");
+					alert.setContentText("Application error: mercy on my grade.");
+					alert.showAndWait();
+				}
 			}
 		}
 		
@@ -113,7 +131,6 @@ public class SearchController {
 	 */
 	public void returnToUserPage(ActionEvent e){
 		try{
-			SerializeData.writeData();
 	        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/NonAdminUI.fxml"));
             Parent admin = (Parent) fxmlLoader.load();
             Scene adminpage = new Scene(admin);

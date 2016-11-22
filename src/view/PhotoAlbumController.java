@@ -43,6 +43,7 @@ import javafx.stage.Stage;
 import utility.Photo;
 import utility.PhotoAlbum;
 import utility.SerializeData;
+import utility.Tag;
 import utility.User;
 /**
  * @author Matthew Ya
@@ -162,7 +163,23 @@ public class PhotoAlbumController {
 						alert.setContentText(name + " does not exist");
 						alert.showAndWait();
 					}else{
-						album.getPhotos().add(photoData.get(userAlbum.getIndexOfPhoto(image)));
+						try {
+							Photo copy = photoData.get(userAlbum.getIndexOfPhoto(image));
+							Photo newphoto = new Photo(copy.getFile());
+							newphoto.setImage();
+							newphoto.setCaption(copy.getCaption());
+							for(Tag tag: copy.getTags()){
+								newphoto.addTag(new Tag(tag.getName(),tag.getValue()));
+							}
+							album.getPhotos().add(newphoto);
+						} catch (FileNotFoundException e1) {
+							Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setTitle("Photo Album");
+							alert.setHeaderText("ERROR!");
+							alert.setContentText("Application error: mercy on my grade.");
+							alert.showAndWait();
+						}
+						
 					}
 				}
 			}
@@ -186,7 +203,9 @@ public class PhotoAlbumController {
 						alert.setContentText(name + " does not exist");
 						alert.showAndWait();
 					}else{
-						album.getPhotos().add(photoData.remove(userAlbum.getIndexOfPhoto(image)));
+						Photo move = photoData.remove(userAlbum.getIndexOfPhoto(image));
+						move.setTime();
+						album.getPhotos().add(move);
 						imageView.setImage(null);
 						phototile.getChildren().remove(imageView);
 					}
