@@ -12,10 +12,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="323.0" prefWidth="524.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PhotoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="668.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PhotoController">
    <children>
-      <ImageView fx:id="imageview" fitHeight="204.0" fitWidth="248.0" layoutX="138.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
-      <ListView fx:id="taglist" layoutX="390.0" layoutY="27.0" prefHeight="125.0" prefWidth="119.0">
+      <ImageView fx:id="imageview" fitHeight="300.0" fitWidth="500.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <ListView fx:id="taglist" layoutX="536.0" layoutY="23.0" prefHeight="125.0" prefWidth="119.0">
          <contextMenu>
             <ContextMenu fx:id="cm">
               <items>
@@ -23,16 +23,15 @@
               </items>
             </ContextMenu>
          </contextMenu></ListView>
-      <TextArea fx:id="photodetails" layoutX="14.0" layoutY="27.0" prefHeight="125.0" prefWidth="119.0" />
-      <TextField fx:id="tagname" layoutX="391.0" layoutY="162.0" prefHeight="25.0" prefWidth="119.0" promptText="Tag Name" />
-      <TextField fx:id="tagvalue" layoutX="390.0" layoutY="204.0" prefHeight="25.0" prefWidth="119.0" promptText="Tag Value" />
-      <Button fx:id="tag" layoutX="419.0" layoutY="237.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="62.0" text="Tag" />
-      <Button fx:id="caption" layoutX="43.0" layoutY="237.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="62.0" text="Caption" />
-      <TextArea fx:id="captiontext" layoutX="14.0" layoutY="162.0" prefHeight="67.0" prefWidth="119.0" promptText="Insert Caption Text" />
-      <Button fx:id="next" layoutX="262.0" layoutY="233.0" mnemonicParsing="false" onAction="#slide" text="&gt;&gt;&gt;" />
-      <Button fx:id="previous" layoutX="221.0" layoutY="233.0" mnemonicParsing="false" onAction="#slide" text="&lt;&lt;&lt;" />
-      <Text layoutX="390.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags:" />
-      <Button fx:id="ret" layoutX="231.0" layoutY="284.0" mnemonicParsing="false" onAction="#returnToAlbumPage" prefHeight="25.0" prefWidth="62.0" text="Return" />
-      <Text layoutX="14.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Photo Details:" />
+      <TextArea fx:id="photodetails" layoutX="14.0" layoutY="327.0" prefHeight="49.0" prefWidth="500.0" promptText="Photo Details" />
+      <TextField fx:id="tagname" layoutX="536.0" layoutY="152.0" prefHeight="25.0" prefWidth="119.0" promptText="Tag Name" />
+      <TextField fx:id="tagvalue" layoutX="536.0" layoutY="183.0" prefHeight="25.0" prefWidth="119.0" promptText="Tag Value" />
+      <Button fx:id="tag" layoutX="565.0" layoutY="215.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="62.0" text="Tag" />
+      <Button fx:id="caption" layoutX="565.0" layoutY="327.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="25.0" prefWidth="62.0" text="Caption" />
+      <TextArea fx:id="captiontext" layoutX="536.0" layoutY="244.0" prefHeight="70.0" prefWidth="119.0" promptText="Insert Caption Text" />
+      <Button fx:id="next" layoutX="264.0" layoutY="390.0" mnemonicParsing="false" onAction="#slide" text="&gt;&gt;&gt;" />
+      <Button fx:id="previous" layoutX="223.0" layoutY="390.0" mnemonicParsing="false" onAction="#slide" text="&lt;&lt;&lt;" />
+      <Text layoutX="536.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags:" />
+      <Button fx:id="ret" layoutX="565.0" layoutY="390.0" mnemonicParsing="false" onAction="#returnToAlbumPage" prefHeight="25.0" prefWidth="62.0" text="Return" />
    </children>
 </AnchorPane>
