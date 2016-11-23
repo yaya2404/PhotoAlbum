@@ -21,22 +21,37 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import utility.SerializeData;
 import utility.User;
-
+/**
+ * @author Matthew Ya
+ * @author Taehee Lee
+ */
 public class LoginController {
-	
-	@FXML Button enter;
-	@FXML TextField userinput;
-	//private Stage stage;
 	/**
-	 * Loads existing users from file into a string array
-	 *
+	 * Corresponds to the enter button on UI.
+	 */
+	@FXML Button enter;
+	/**
+	 * Corresponds to the textfield on UI where user enters their ID/name.
+	 */
+	@FXML TextField userinput;
+	
+	/**
+	 * Contains list of users permitted to login
 	 */
 	private ArrayList<User> users;
-	
+	/**
+	 * obtains data of users from file and stores in variable users.
+	 */
 	public void start(){
 		//obtains permitted users from admin folder
 		this.users = SerializeData.getData();
 	}
+	/**
+	 * The function that handles the login process. Only admin and users from ArrayList of users are permitted.
+	 * If the user is permitted, the page is then redirected to their corresponding page (admin or non-admin subsystem).
+	 * 
+	 * @param e		event when user presses login
+	 */
 	public void login(ActionEvent e){
 		String userid = userinput.getText().trim();
 		int index = -1;
@@ -74,12 +89,19 @@ public class LoginController {
 			}
 		}catch(IOException h){
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("User");
+			alert.setTitle("Login");
 			alert.setHeaderText("ERROR!");
 			alert.setContentText("Application error: mercy on my grade.");
 			alert.showAndWait();
 		}
 	}
+	/**
+	 * Searches and obtains the index of the user in the ArrayList of users
+	 * 
+	 * 
+	 * @param name	name of user being queried
+	 * @return		the index of the user in the ArrayList of users. -1 if the user does not exist.
+	 */
 	private int getUser(String name){
 		for(int i = 0; i < this.users.size(); i++){
 			if(this.users.get(i).toString().compareToIgnoreCase(name) == 0){

@@ -1,11 +1,16 @@
 package application;
-	
+/**
+ * @author Matthew Ya
+ * @author Taehee Lee
+ */
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import utility.SerializeData;
 import view.LoginController;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 
 public class PhotoAlbum extends Application {
@@ -24,7 +29,11 @@ public class PhotoAlbum extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
-			e.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Start");
+			alert.setHeaderText("ERROR!");
+			alert.setContentText("Application error: mercy on my grade.");
+			alert.showAndWait();
 		}
 	}
 	

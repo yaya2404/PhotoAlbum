@@ -43,20 +43,54 @@ import javafx.stage.Stage;
 import utility.Photo;
 import utility.PhotoAlbum;
 import utility.SerializeData;
+import utility.Tag;
 import utility.User;
-
+/**
+ * @author Matthew Ya
+ * @author Taehee Lee
+ */
 public class PhotoAlbumController {
 
-
-
+	/**
+	 * Corresponds to the add button on the PhotoAlbumUI
+	 */
 	@FXML Button add;
+	/**
+	 * Corresponds to the exit button on the PhotoAlbumUI
+	 */
 	@FXML Button exit;
+	/**
+	 * The scrollpane where photos are displayed
+	 */
 	@FXML ScrollPane photogallery;
+	/**
+	 * This Text shows the caption of the selected photo.
+	 */
 	@FXML Text caption;
+	/**
+	 * TilePane where photos are stored into.
+	 */
 	private TilePane phototile;
+	/**
+	 * Album that is being displayed on scrollpane.
+	 */
 	private PhotoAlbum userAlbum;
+	/**
+	 * ArrayList of the Photo objects inside the user album.
+	 */
 	private ArrayList<Photo> photoData;
+	/**
+	 * owner of the album
+	 */
 	private User user;
+	/**
+	 * Loads the photos inside the album into a TilePane which is then set into the ScrollPane.
+	 * 
+	 * 
+	 * @param user		owner of the album
+	 * @param album		album that is being displayed
+	 * @throws FileNotFoundException	is thrown if the file stored in the PhotoObject no longer exists on the users local system.
+	 */
 	public void start(User user, PhotoAlbum album) throws FileNotFoundException{
 		this.userAlbum = album;
 		this.photoData = album.getPhotos();
@@ -76,7 +110,26 @@ public class PhotoAlbumController {
 		photogallery.setFitToWidth(true);
 		this.user = user;
 	}
-
+	/**
+	 * Creates an ImageView to be added to the TilePane.
+	 * 
+	 * <p> When an ImageView is created, a contextmenu is added to it. The contextmenu
+	 * is accessible by clicking on the mouse's secondary button on the image. 
+	 * <p>The Context menu has three items: Copy image, Move image, and Delete image.
+	 * 
+	 * <p> Copy image: allows a user to copy an image onto a different existing album.
+	 * <p> Move image: allows a user to move an image to a different existing album.
+	 * <p> Delete image: allows a user to delete an image from the album.
+	 * 
+	 * <p>When the user double clicks on the photo with his/her primary mouse button, 
+	 * a new window is opened with the photo, photo details, and options to edit the photo.
+	 * 
+	 * There's also a highlight effect when the user hovers over or clicks on the image.
+	 * 
+	 * @param image 	that is contained by the Photo Object.
+	 * @return			ImageView that is to be added onto the TilePane
+	 * @throws FileNotFoundException	is thrown if the file stored in the PhotoObject no longer exists on the users local system.
+	 */
 	private ImageView createImageView(Image image) throws FileNotFoundException{
 
 	
@@ -110,7 +163,23 @@ public class PhotoAlbumController {
 						alert.setContentText(name + " does not exist");
 						alert.showAndWait();
 					}else{
-						album.getPhotos().add(photoData.get(userAlbum.getIndexOfPhoto(image)));
+						try {
+							Photo copy = photoData.get(userAlbum.getIndexOfPhoto(image));
+							Photo newphoto = new Photo(copy.getFile());
+							newphoto.setImage();
+							newphoto.setCaption(copy.getCaption());
+							for(Tag tag: copy.getTags()){
+								newphoto.addTag(new Tag(tag.getName(),tag.getValue()));
+							}
+							album.getPhotos().add(newphoto);
+						} catch (FileNotFoundException e1) {
+							Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setTitle("Photo Album");
+							alert.setHeaderText("ERROR!");
+							alert.setContentText("Application error: mercy on my grade.");
+							alert.showAndWait();
+						}
+						
 					}
 				}
 			}
@@ -134,7 +203,9 @@ public class PhotoAlbumController {
 						alert.setContentText(name + " does not exist");
 						alert.showAndWait();
 					}else{
-						album.getPhotos().add(photoData.remove(userAlbum.getIndexOfPhoto(image)));
+						Photo move = photoData.remove(userAlbum.getIndexOfPhoto(image));
+						move.setTime();
+						album.getPhotos().add(move);
 						imageView.setImage(null);
 						phototile.getChildren().remove(imageView);
 					}
@@ -165,14 +236,18 @@ public class PhotoAlbumController {
 							FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PhotoUI.fxml"));
 							Parent photoalbum = (Parent) fxmlLoader.load();
 							Scene photoalbumpage = new Scene(photoalbum);
-							Stage currStage = new Stage();
+							Stage currStage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
 							PhotoController photoController = fxmlLoader.getController();
-							photoController.start(photoData,photoData.get(userAlbum.getIndexOfPhoto(image)));
+							photoController.start(user,userAlbum,photoData.get(userAlbum.getIndexOfPhoto(image)));
 							currStage.setTitle(((Stage)((Node)mouseEvent.getSource()).getScene().getWindow()).getTitle() + "\\" + photoData.get(userAlbum.getIndexOfPhoto(image)).getName());
 							currStage.setScene(photoalbumpage);
 							currStage.show();
 						}catch(IOException r){
-							r.printStackTrace();
+							Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setTitle("Photo Album");
+							alert.setHeaderText("ERROR!");
+							alert.setContentText("Application error: mercy on my grade.");
+							alert.showAndWait();
 						}
 					}else if(mouseEvent.getClickCount() == 1){
 						caption.setText("Caption: " + photoData.get(userAlbum.getIndexOfPhoto(image)).getCaption());
@@ -218,6 +293,14 @@ public class PhotoAlbumController {
 		});
 		return imageView;
 	}
+	/**
+	 * Allows a user to add a photo or exit from PhotoAlbum window.
+	 * 
+	 * <p>Add: user adds a photo by pressing add and then selecting a permitted file (png, gif, jpg, and tif) from
+	 * the file chooser.
+	 * 
+	 * @param e		event from the add, exit button.
+	 */
 	public void buttonAction(ActionEvent e){
 		Button b = (Button) e.getSource();
 		if(b == add){
